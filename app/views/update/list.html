@@ -1,0 +1,21 @@
+{{ $machine := .Machine }}
+{{ template "header" . }}
+<table>
+    <thead>
+    <tr>
+        <th><a href="/machine/update/new/{{ $machine.Id }}"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>Machine</th>
+        <th>Operator</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Updates}}
+    <tr>
+        <td><i class="ri-edit-line"></i> <a href="/machine/update/edit/{{ .Id }}">{{ .Date }}</a></td>
+        <td>{{ $machine.Name }}</td>
+        <td>{{ .Operator.Name }}</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+{{ template "footer" . }}

@@ -1,0 +1,56 @@
+{{ template "header" . }}
+<div class="container">
+    <form action="/machine/save/{{.Machine.Id}}" method="post" id="edit">
+        <input type="hidden" name="_method" value="PATCH">
+        <div>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="{{.Machine.Name}}" required>
+            </div>
+            <div>
+                <label for="system">System</label>
+                <select name="system" id="system" hx-get="/api/htmx/systems?selected={{.Machine.System.Id}}"
+                        hx-trigger="load"
+                        hx-target="#system">
+                    <option disabled selected>Select</option>
+                </select>
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input type="text" name="location" id="location" value="{{.Machine.Location}}">
+            </div>
+            <div>
+                <label for="ip">IP</label>
+                <input type="text" name="ip" id="ip" value="{{.Machine.Ip}}">
+            </div>
+            <div>
+                <label for="fqdn">FQDN</label>
+                <input type="text" name="fqdn" id="fqdn" value="{{.Machine.Fqdn}}">
+            </div>
+            <div>
+                <label for="service">Service</label>
+                <input type="text" name="service" id="service" value="{{.Machine.Service}}">
+            </div>
+            <div>
+                <label for="comment">Comment</label>
+                <input type="text" name="comment" id="comment" value="{{.Machine.Comment}}">
+            </div>
+            <div>
+                <label for="backup">Backup</label>
+                <input type="text" name="backup" id="backup" value="{{.Machine.Backup}}">
+            </div>
+            <div>
+                <label for="operator">Operator</label>
+                <select name="operator" id="operator" hx-get="/api/htmx/operators?selected={{.Machine.Operator.Id}}"
+                        hx-trigger="load"
+                        hx-target="#operator">
+                    <option disabled selected>Select</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <div>
+        <button type="submit" form="edit" class="btn btn-green">Save</button>
+    </div>
+</div>
+{{ template "footer" . }}

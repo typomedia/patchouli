@@ -1,0 +1,26 @@
+{{ template "header" . }}
+<table>
+    <thead>
+    <tr>
+        <th><a href="/system/new"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>LTS</th>
+        <th>EOL</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Systems}}
+    <tr>
+        <td><i class="ri-edit-line"></i> <a href="/system/edit/{{.Id}}">{{.Name}}</a></td>
+        <td>
+            {{ if .LTS }}
+            <span role="button" class="primary">True</span>
+            {{ else }}
+            <span role="button" class="secondary">False</span>
+            {{ end }}
+        </td>
+        <td>{{ .EOL }}</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+{{ template "footer" . }}

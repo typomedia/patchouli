@@ -1,0 +1,32 @@
+{{ template "header" . }}
+<table>
+    <thead>
+    <tr>
+        <th><a href="/machine/new"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>System</th>
+        <th>Address</th>
+        <th>Domain</th>
+        <th>Operator</th>
+        <th>Department</th>
+        <th>History</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Machines}}
+    <tr>
+        <td><i class="ri-edit-line"></i> <a href="/machine/edit/{{ .Id }}">{{ .Name }}</a></td>
+        <td>{{ .System.Name }}</td>
+        <td>{{ .Ip }}</td>
+        <td>{{ .Fqdn }}</td>
+        {{if .Operator.Email}}
+        <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a></td>
+        {{else}}
+        <td>{{ .Operator.Name }}</td>
+        {{end}}
+        <td>{{ .Operator.Department }}</td>
+        <td><i class="ri-refresh-line"></i> <a href="/machine/update/list/{{ .Id }}">Update</a></td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+{{ template "footer" . }}

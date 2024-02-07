@@ -1,0 +1,38 @@
+{{ define "header" }}
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <script defer src="/js/htmx.min.js#1.9.5"></script>
+    <title>Patchouli</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <img src="/img/patchouli.svg">
+        <li class="logo">Patchouli</li>
+        <li><a href="/"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+        <li><a href="/machine"><i class="ri-computer-line"></i> Machines</a></li>
+        <li><a href="/operator"><i class="ri-user-line"></i> Operators</a></li>
+        <li><a href="/system"><i class="ri-server-line"></i> Systems</a></li>
+        <!--<li><a href="#"><i class="ri-apps-line"></i> Apps</a></li>
+        <li><a href="#"><i class="ri-database-line"></i> Backups</a></li>-->
+    </ul>
+    <ul>
+        <li><a href="/config"><i class="ri-settings-5-line"></i></a></li>
+    </ul>
+</nav>
+<main>
+{{ end }}
+{{ define "footer" }}
+</main>
+    <footer>
+        <p>© 2023 <a href="https://dict.typo.media">Typomedia Foundation, Philipp Speck</a>
+            &squarf; Powered by <a href="https://gofiber.io/">
+                <img src="/img/fiber.svg" alt="Fiber" class="inline">
+            </a></p>
+    </footer>
+</body>
+</html>
+{{ end }}

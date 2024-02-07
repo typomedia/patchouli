@@ -1,0 +1,8 @@
+{{ $selected := .Selected }}
+{{ range .Systems }}
+{{ if eq .Id $selected }}
+<option value="{{ .Id }}" selected>{{ .Name }}</option>
+{{ else }}
+<option value="{{ .Id }}">{{ .Name }}</option>
+{{ end }}
+{{ end }}

@@ -1,0 +1,31 @@
+{{ template "header" . }}
+<div class="container">
+    <form action="/machine/update/save/{{ .Update.Id }}" method="post" id="edit">
+        <input type="hidden" name="_method" value="PATCH">
+        <div>
+            <div>
+                <input type="hidden" name="machine" id="machine" value="{{ .Update.Machine }}">
+            </div>
+            <div>
+                <label for="operator">Operator</label>
+                <select name="operator" id="operator" hx-get="/api/htmx/operators?selected={{.Update.Operator.Id}}"
+                        hx-trigger="load"
+                        hx-target="#operator">
+                    <option disabled selected>Select</option>
+                </select>
+            </div>
+            <div>
+                <label for="date">Date</label>
+                <input type="date" name="date" id="date" value="{{ .Update.Date }}" format="yyyy-mm-dd">
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="30" rows="3">{{ .Update.Description }}</textarea>
+            </div>
+        </div>
+    </form>
+    <div>
+        <button type="submit" form="edit">Save</button>
+    </div>
+</div>
+{{ template "footer" . }}

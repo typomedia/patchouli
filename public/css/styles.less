@@ -1,0 +1,69 @@
+@import url(pico.min.css);
+@import url(../fonts/signika/signika.css);
+@import url(../fonts/marker/permanent-marker.css);
+@import url(../fonts/remix/remixicon.css);
+
+@font-family: 'Signika', sans-serif;
+
+body {
+  font-family: @font-family;
+  min-height: 100vh;
+  nav {
+    padding: 0 2rem 0 1rem;
+    border-bottom: 2px solid lightgray;
+    img {
+      height: 2.6rem;
+    }
+    .logo {
+      font-family: 'Permanent Marker', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      padding-left: 0;
+    }
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    >.container {
+      margin-top: 2em;
+    }
+  }
+  footer {
+    padding-top: 0;
+    text-align: center;
+    p {
+      font-size: 0.9em;
+    }
+    .inline {
+      display: inline-block;
+      height: 1rem;
+      margin-bottom: 0.2rem;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: @font-family;
+}
+
+[role="button"] {
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.danger {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.success {
+  background: rgba(0, 250, 0, 0.2);
+}
+
+.warning {
+  background: rgba(255, 255, 0, 0.2);
+}

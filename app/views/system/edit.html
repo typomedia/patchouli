@@ -1,0 +1,29 @@
+{{ template "header" . }}
+<div class="container">
+    <form action="/system/save/{{.System.Id}}" method="post" id="edit">
+        <input type="hidden" name="_method" value="PATCH">
+        <div>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="{{.System.Name}}" required>
+            </div>
+            <div>
+                <label for="lts">
+                    {{ if .System.LTS }}
+                    <input type="checkbox" id="lts" name="lts" role="switch" checked="checked">
+                    {{ else }}
+                    <input type="checkbox" id="lts" name="lts" role="switch">
+                    {{ end }}
+                </label>
+            </div>
+            <div>
+                <label for="eol">EOL</label>
+                <!-- format YY-mm-dd -->
+                <input type="date" name="eol" id="eol" value="{{.System.EOL}}" format="yyyy-mm-dd">
+        </div>
+    </form>
+    <div>
+        <button type="submit" form="edit" class="btn btn-green">Save</button>
+    </div>
+</div>
+{{ template "footer" . }}

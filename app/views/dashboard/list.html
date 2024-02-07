@@ -1,0 +1,45 @@
+{{ template "header" . }}
+<table>
+    <thead>
+    <tr>
+        <th>Status</th>
+        <th>Updated</th>
+        <th>Name</th>
+        <th>System</th>
+        <th>Address</th>
+        <th>Domain</th>
+        <th>Operator</th>
+        <th>Department</th>
+        <th>History</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Machines}}
+    <tr>
+        <td class="{{ .Status }}">{{ .Days }}</td>
+        <td>{{ .Update.Date }}</td>
+        <td>{{ .Name }}</td>
+        <td>{{ .System.Name }}</td>
+        <td>{{ .Ip }}</td>
+        <td>{{ .Fqdn }}</td>
+        {{ if .Update.Operator.Name }}
+            {{ if .Operator.Email }}
+            <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Update.Operator.Email }}">{{ .Update.Operator.Name }}</a></td>
+            {{ else }}
+            <td>{{ .Update.Operator.Name }}</td>
+            {{ end }}
+            <td>{{ .Update.Operator.Department }}</td>
+        {{ else }}
+            {{ if .Operator.Email }}
+            <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a></td>
+            {{ else }}
+            <td>{{ .Operator.Name }}</td>
+            {{ end }}
+            <td>{{ .Operator.Department }}</td>
+        {{ end }}
+        <td><i class="ri-refresh-line"></i> <a href="/machine/update/list/{{ .Id }}">Update</a></td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+{{ template "footer" . }}
