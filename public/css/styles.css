@@ -28,6 +28,12 @@ body main {
 body main > .container {
   margin-top: 2em;
 }
+body main table tbody tr:nth-child(even) {
+  background: #f6f7f9;
+}
+body main table tbody tr:hover {
+  background: #e6ebef;
+}
 body footer {
   padding: 0;
   text-align: center;
@@ -56,12 +62,12 @@ a:hover {
   text-decoration: none;
 }
 .danger {
-  background: rgba(255, 0, 0, 0.2);
+  background: #ffcccc;
 }
 .success {
-  background: rgba(0, 250, 0, 0.2);
+  background: #ccfecc;
 }
 .warning {
-  background: rgba(255, 255, 0, 0.2);
+  background: #f8f9c7;
 }
 /*# sourceMappingURL=styles.css.map */

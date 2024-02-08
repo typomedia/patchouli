@@ -30,6 +30,16 @@ body {
     >.container {
       margin-top: 2em;
     }
+    table {
+      tbody {
+        tr:nth-child(even) {
+          background: lighten(@color-primary, 65);
+        }
+        tr:hover {
+          background: lighten(@color-primary, 60);
+        }
+      }
+    }
   }
   footer {
     padding: 0;
@@ -59,13 +69,13 @@ a:hover {
 }
 
 .danger {
-  background: rgba(255, 0, 0, 0.2);
+  background: #ffcccc;
 }
 
 .success {
-  background: rgba(0, 250, 0, 0.2);
+  background: #ccfecc;
 }
 
 .warning {
-  background: rgba(255, 255, 0, 0.2);
+  background: #f8f9c7;
 }
