@@ -8,6 +8,7 @@ body {
 }
 body nav {
   padding: 0 2rem 0 1rem;
+  background: #f6f7f9;
   border-bottom: 2px solid lightgray;
 }
 body nav img {
