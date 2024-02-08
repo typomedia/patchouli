@@ -30,7 +30,18 @@ body {
     >.container {
       margin-top: 2em;
     }
-    table {
+    table#sort {
+      thead {
+        th {
+          &:after {
+            content: "\f15f";
+            font-family: 'Remixicon';
+            font-size: 0.6em;
+            margin-left: 0.2rem;
+            color: #999;
+          }
+        }
+      }
       tbody {
         tr:nth-child(even) {
           background: lighten(@color-primary, 65);
