@@ -28,7 +28,7 @@ body main > .container {
   margin-top: 2em;
 }
 body footer {
-  padding-top: 0;
+  padding: 0;
   text-align: center;
 }
 body footer p {
