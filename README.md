@@ -1,11 +1,11 @@
-# Patchouli - Be up to date
+# Patchouli - Stay secure
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/typomedia/patchouli)](https://goreportcard.com/report/github.com/typomedia/patchouli)
 [![Go Reference](https://pkg.go.dev/badge/github.com/typomedia/patchouli.svg)](https://pkg.go.dev/github.com/typomedia/patchouli)
 [![GitHub release](https://img.shields.io/github/release/typomedia/patchouli.svg)](https://github.com/typomedia/patchouli/releases/latest)
 [![GitHub license](https://img.shields.io/github/license/typomedia/patchouli.svg)](https://github.com/typomedia/patchouli/blob/master/LICENSE)
 
-Patchouli is a lightweight patch management planner for operating systems. It comes with an intuitive web interface.
+Patchouli is a lightweight patch management planner for **operating systems**. It comes with an intuitive web interface.
 
 All data will be stored in a single `patchouli.boltdb` file in the current working directory.
 
@@ -32,6 +32,7 @@ All data will be stored in a single `patchouli.boltdb` file in the current worki
 ## Todo
 
 - [ ] add a login page
+- [ ] add a `toml` config file
 - [ ] email notifications
 - [ ] protect api used by the frontend
 - [ ] optimize json/csv export

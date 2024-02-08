@@ -24,9 +24,32 @@ var views embed.FS
 //go:embed public
 var public embed.FS
 
+type Application struct {
+	Name        string
+	Version     string
+	Author      string
+	Description string
+}
+
+var App = Application{
+	Name:        "Patchouli",
+	Version:     "0.1.0",
+	Author:      "Philipp Speck <philipp@typo.media>",
+	Description: "Patch Management Planner",
+}
+
 func main() {
+	engine := html.NewFileSystem(http.FS(views), ".html")
+	engine.AddFunc("Name", func() string {
+		return App.Name
+	})
+	engine.AddFunc("Version", func() string {
+		return App.Version
+	})
+
 	app := fiber.New(fiber.Config{
-		Views: html.NewFileSystem(http.FS(views), ".html"),
+		AppName: App.Name,
+		Views:   engine,
 	})
 
 	app.Get("/", dashboard.List)
@@ -60,9 +83,8 @@ func main() {
 	app.Get("/api/json/export", json.Export)
 	app.Get("/api/csv/export", csv.Export)
 
+	// publish static embedded files like css, js, images
 	app.Use("/", filesystem.New(filesystem.Config{
-		//app.Static("/", "public")
-		// publish static embedded files like css, js, images
 		Root:       http.FS(public),
 		PathPrefix: "public",
 	}))
