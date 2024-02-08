@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
@@ -16,6 +17,7 @@ import (
 	"github.com/typomedia/patchouli/app/handler/update"
 	"log"
 	"net/http"
+	"time"
 )
 
 //go:embed app/views
@@ -45,6 +47,9 @@ func main() {
 	})
 	engine.AddFunc("Version", func() string {
 		return App.Version
+	})
+	engine.AddFunc("Year", func() string {
+		return fmt.Sprintf("%d", time.Now().Year())
 	})
 
 	app := fiber.New(fiber.Config{
