@@ -50,7 +50,7 @@ body footer p {
 }
 body footer .inline {
   display: inline-block;
-  height: 1rem;
+  height: 1em;
   margin-bottom: 0.2rem;
 }
 h1,
