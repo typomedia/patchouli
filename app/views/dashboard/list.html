@@ -1,5 +1,5 @@
 {{ template "header" . }}
-<table>
+<table id="machines">
     <thead>
     <tr>
         <th>Status</th>
@@ -42,4 +42,7 @@
     {{end}}
     </tbody>
 </table>
+<script>
+    new Tablesort(document.getElementById('machines'));
+</script>
 {{ template "footer" . }}
