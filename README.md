@@ -31,6 +31,7 @@ All data will be stored in a single `patchouli.boltdb` file in the current worki
 
 ## Todo
 
+- [ ] add delete functionality
 - [ ] add a login page
 - [ ] add a `toml` config file
 - [ ] email notifications
