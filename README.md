@@ -9,6 +9,10 @@ Patchouli is a lightweight patch management planner for **operating systems**. I
 
 All data will be stored in a single `patchouli.boltdb` file in the current working directory.
 
+## Screenshot
+
+![Patchouli](screenshot.png)
+
 ## Run
 
     make run
