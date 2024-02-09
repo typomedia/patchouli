@@ -41,6 +41,17 @@ All data will be stored in a single `patchouli.boltdb` file in the current worki
 - [ ] refactor some quirky code
 - [ ] write some tests...
 
+## Systemd
+
+You can use the provided [patchouli.service](patchouli.service) file to run `patchouli` as a daemon. 
+If not running in a container, change the `User` and `Group` for security reasons.
+
+    sudo mkdir /var/patchouli
+    sudo cp patchouli.service /etc/systemd/system/patchouli.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now patchouli
+    sudo systemctl status patchouli
+
 ## License
 
 Patchouli is licensed under the [GNU General Public License v3.0](LICENSE).
