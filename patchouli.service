@@ -1,0 +1,15 @@
+[Unit]
+Description=Patchouli
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/var/patchouli
+ExecStart=/usr/local/bin/patchouli
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
