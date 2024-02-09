@@ -35,7 +35,7 @@ type Application struct {
 
 var App = Application{
 	Name:        "Patchouli",
-	Version:     "0.1.0",
+	Version:     "0.1.1",
 	Author:      "Philipp Speck <philipp@typo.media>",
 	Description: "Patch Management Planner",
 }
