@@ -3,6 +3,10 @@ package main
 import (
 	"embed"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
@@ -11,13 +15,12 @@ import (
 	"github.com/typomedia/patchouli/app/handler/api/json"
 	"github.com/typomedia/patchouli/app/handler/config"
 	"github.com/typomedia/patchouli/app/handler/dashboard"
+	dashboardFilter "github.com/typomedia/patchouli/app/handler/dashboard/filter"
 	"github.com/typomedia/patchouli/app/handler/machine"
+	machineFilter "github.com/typomedia/patchouli/app/handler/machine/filter"
 	"github.com/typomedia/patchouli/app/handler/operator"
 	"github.com/typomedia/patchouli/app/handler/system"
 	"github.com/typomedia/patchouli/app/handler/update"
-	"log"
-	"net/http"
-	"time"
 )
 
 //go:embed app/views
@@ -58,10 +61,12 @@ func main() {
 	})
 
 	app.Get("/", dashboard.List)
+	app.Get("/filter/operator/:id", dashboardFilter.Operator)
 
 	app.Get("/machine", machine.List)
 	app.Get("/machine/new", machine.New)
 	app.Get("/machine/edit/:id", machine.Edit)
+	app.Get("/machine/filter/operator/:id", machineFilter.Operator)
 	app.Post("/machine/save/:id", machine.Save)
 
 	app.Get("/machine/update/list/:id", update.List)
