@@ -19,7 +19,7 @@
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>
         {{if .Operator.Email}}
-        <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a></td>
+        <td><i class="ri-menu-search-line"></i> <a href="/machine/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
         {{else}}
         <td>{{ .Operator.Name }}</td>
         {{end}}
