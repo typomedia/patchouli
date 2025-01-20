@@ -24,14 +24,14 @@
         <td>{{ .Fqdn }}</td>
         {{ if .Update.Operator.Name }}
             {{ if .Operator.Email }}
-            <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Update.Operator.Email }}">{{ .Update.Operator.Name }}</a></td>
+            <td><i class="ri-menu-search-line"></i> <a href="/filter/operator/{{ .Update.Operator.Id}}">{{ .Update.Operator.Name }}</a></td>
             {{ else }}
             <td>{{ .Update.Operator.Name }}</td>
             {{ end }}
             <td>{{ .Update.Operator.Department }}</td>
         {{ else }}
             {{ if .Operator.Email }}
-            <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a></td>
+            <td><i class="ri-menu-search-line"></i> <a href="/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
             {{ else }}
             <td>{{ .Operator.Name }}</td>
             {{ end }}
