@@ -2,9 +2,10 @@ package boltdb
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/typomedia/patchouli/app/structs"
 	"go.etcd.io/bbolt"
-	"time"
 )
 
 var Config = bbolt.Options{
@@ -138,6 +139,26 @@ func (bolt *Bolt) GetAllByName(id string, bucket string) ([][]byte, error) {
 				return err
 			}
 			if update.Machine == id {
+				result = append(result, v)
+			}
+		}
+		return nil
+	})
+	return result, err
+}
+
+func (bolt *Bolt) GetAllByOperatorId(id string, bucket string) ([][]byte, error) {
+	var result [][]byte
+	err := bolt.db.View(func(tx *bbolt.Tx) error {
+		bucket := tx.Bucket([]byte(bucket))
+		cursor := bucket.Cursor()
+		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
+			var machine structs.Machine
+			err := json.Unmarshal(v, &machine)
+			if err != nil {
+				return err
+			}
+			if machine.Operator.Id == id {
 				result = append(result, v)
 			}
 		}
