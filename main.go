@@ -74,6 +74,9 @@ func main() {
 	app.Get("/machine/update/edit/:id", update.Edit)
 	app.Post("/machine/update/save/:id", update.Save)
 
+	app.Get("/machine/deactivate/:id", machine.Deactivate)
+	app.Get("/machine/activate/:id", machine.Activate)
+
 	app.Get("/operator", operator.List)
 	app.Get("/operator/new", operator.New)
 	app.Get("/operator/edit/:id", operator.Edit)
