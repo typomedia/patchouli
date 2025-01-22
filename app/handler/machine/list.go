@@ -2,6 +2,7 @@ package machine
 
 import (
 	"encoding/json"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
@@ -19,6 +20,7 @@ func List(c *fiber.Ctx) error {
 	machines, _ := db.GetAll("machine")
 
 	Machines := structs.Machines{}
+	inactiveMachines := structs.Machines{}
 
 	for _, v := range machines {
 		machine := structs.Machine{}
@@ -26,9 +28,15 @@ func List(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		Machines = append(Machines, machine)
+		if machine.Inactive {
+			inactiveMachines = append(inactiveMachines, machine)
+		} else {
+			Machines = append(Machines, machine)
 
+		}
 	}
+
+	Machines = append(Machines, inactiveMachines...)
 
 	defer db.Close()
 

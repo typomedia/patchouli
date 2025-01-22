@@ -2,13 +2,14 @@ package dashboard
 
 import (
 	"encoding/json"
+	"sort"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/typomedia/patchouli/app/helper"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
-	"sort"
-	"time"
 )
 
 func List(c *fiber.Ctx) error {
@@ -22,6 +23,7 @@ func List(c *fiber.Ctx) error {
 	machines, _ := db.GetAll("machine")
 
 	Machines := structs.Machines{}
+	inactiveMachines := structs.Machines{}
 	for _, v := range machines {
 		machine := structs.Machine{}
 		err = json.Unmarshal(v, &machine)
@@ -39,12 +41,19 @@ func List(c *fiber.Ctx) error {
 
 		machine.Update = update
 
-		Machines = append(Machines, machine)
+		if machine.Inactive {
+			inactiveMachines = append(inactiveMachines, machine)
+		} else {
+			Machines = append(Machines, machine)
+		}
 
 	}
 
 	// sort machines by oldest update first
 	sort.Sort(structs.ByDate(Machines))
+
+	// append inactive machines to the end
+	Machines = append(Machines, inactiveMachines...)
 
 	err = db.SetBucket("config")
 	if err != nil {
