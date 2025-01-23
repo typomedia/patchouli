@@ -23,7 +23,6 @@ func List(c *fiber.Ctx) error {
 	machines, _ := db.GetAll("machine")
 
 	Machines := structs.Machines{}
-	inactiveMachines := structs.Machines{}
 	for _, v := range machines {
 		machine := structs.Machine{}
 		err = json.Unmarshal(v, &machine)
@@ -41,9 +40,7 @@ func List(c *fiber.Ctx) error {
 
 		machine.Update = update
 
-		if machine.Inactive {
-			inactiveMachines = append(inactiveMachines, machine)
-		} else {
+		if !machine.Inactive {
 			Machines = append(Machines, machine)
 		}
 
@@ -51,9 +48,6 @@ func List(c *fiber.Ctx) error {
 
 	// sort machines by oldest update first
 	sort.Sort(structs.ByDate(Machines))
-
-	// append inactive machines to the end
-	Machines = append(Machines, inactiveMachines...)
 
 	err = db.SetBucket("config")
 	if err != nil {
