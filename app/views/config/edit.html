@@ -2,33 +2,62 @@
 <div class="container">
     <details>
         <summary>General</summary>
-        <form action="/config/save" method="post" id="edit">
+        <form action="/config/save" method="post" id="edit_general">
             <input type="hidden" name="_method" value="PATCH">
             <div>
                 <div>
-                    <label for="company">Company</label>
-                    <input type="text" name="company" id="company" value="{{.Config.Company}}" required>
+                    <label for="general.company">Company</label>
+                    <input type="text" name="general.company" id="general.company" value="{{.Config.General.Company}}" required>
                 </div>
                 <div>
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email" value="{{.Config.Email}}">
+                    <label for="general.email">Email</label>
+                    <input type="text" name="general.email" id="general.email" value="{{.Config.General.Email}}">
                 </div>
                 <div>
-                    <label for="interval">Interval</label>
-                    <input type="text" name="interval" id="interval" value="{{.Config.Interval}}">
+                    <label for="general.interval">Interval</label>
+                    <input type="text" name="general.interval" id="general.interval" value="{{.Config.General.Interval}}">
+                </div>
+                <div>
+                    <button type="submit" form="edit_general" class="btn btn-green">Save</button>
                 </div>
             </div>
         </form>
-        <div>
-            <button type="submit" form="edit" class="btn btn-green">Save</button>
-        </div>
     </details>
-
+    <details>
+        <summary>Mailserver</summary>
+        <form action="/config/save" method="post" id="edit_mailserver">
+            <input type="hidden" name="_method" value="PATCH">
+            <div>
+                <div>
+                    <label for="smtp.sender">Absender</label>
+                    <input type="text" name="smtp.sender" id="smtp.sender" value="{{.Config.Smtp.Sender}}" required>
+                </div>
+                <div>
+                    <label for="smtp.username">Benutzername</label>
+                    <input type="text" name="smtp.username" id="smtp.username" value="{{.Config.Smtp.Username}}" required>
+                </div>
+                <div>
+                    <label for="smtp.host">Adresse</label>
+                    <input type="text" name="smtp.host" id="smtp.host" value="{{.Config.Smtp.Host}}" required>
+                </div>
+                <div>
+                    <label for="smtp.port">Port</label>
+                    <input type="text" name="smtp.port" id="smtp.port" value="{{.Config.Smtp.Port}}" required>
+                </div>
+                <div>
+                    <label for="smtp.password">Passwort</label>
+                    <input type="password" name="smtp.password" id="smtp.password" value="{{ .Config.Smtp.Password }}" required>
+                </div>
+                <div>
+                    <button type="submit" form="edit_mailserver" class="btn btn-green">Save</button>
+                </div>
+            </div>
+        </form>
+    </details>
     <details>
         <summary>Export</summary>
         <p>Export the database as CSV file.</p>
         <a href="/api/csv/export">Download</a>
     </details>
-
 </div>
 {{ template "footer" . }}

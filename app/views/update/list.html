@@ -6,6 +6,7 @@
         <th><a href="/machine/update/new/{{ $machine.Id }}"><i class="ri-edit-box-fill"></i> New</a></th>
         <th>Machine</th>
         <th>Operator</th>
+        <th>Mail</th>
     </tr>
     </thead>
     <tbody>
@@ -14,8 +15,17 @@
         <td><i class="ri-edit-line"></i> <a href="/machine/update/edit/{{ .Id }}">{{ .Date }}</a></td>
         <td>{{ $machine.Name }}</td>
         <td>{{ .Operator.Name }}</td>
+        {{ if .Mail }}
+            <td data-tooltip="E-Mail erfolgreich versendet!"><i class="ri-mail-send-line mail-success"></i></td>
+        {{ else }}
+            <td data-tooltip="E-Mail konnte nicht versendet werden!"><i class="ri-mail-close-line mail-fail"></i></td>
+        {{ end }}
     </tr>
     {{end}}
     </tbody>
 </table>
+
+<style lang="css">
+    
+</style>
 {{ template "footer" . }}
