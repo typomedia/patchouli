@@ -1,11 +1,12 @@
 package helper
 
 import (
-	"github.com/gorilla/schema"
-	"github.com/oklog/ulid/v2"
 	"net/url"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/schema"
+	"github.com/oklog/ulid/v2"
 )
 
 func DecodeQuery(query string, target interface{}) interface{} {
