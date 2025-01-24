@@ -2,13 +2,14 @@ package dashboard
 
 import (
 	"encoding/json"
+	"sort"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/typomedia/patchouli/app/helper"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
-	"sort"
-	"time"
 )
 
 func List(c *fiber.Ctx) error {
@@ -56,7 +57,7 @@ func List(c *fiber.Ctx) error {
 
 	defer db.Close()
 
-	interval := config.Interval
+	interval := config.General.Interval
 	for i := range Machines {
 		currentDate := time.Now()
 
