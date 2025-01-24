@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Patchouli - Stay secure</title>
+    <style>
+      /* -------------------------------------
+          GLOBAL RESETS
+      ------------------------------------- */
+      
+      /*All the styling goes here*/
+      
+      img {
+        border: none;
+        -ms-interpolation-mode: bicubic;
+        max-width: 100%;
+      }
+      img.logo {
+        height: 48px;
+        max-height: 48px;
+      }
+
+      body {
+        background-color: #fafafa;
+        font-family: sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        padding: 0;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%; 
+      }
+
+      table {
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        width: 100%; }
+        table td {
+          font-family: sans-serif;
+          font-size: 14px;
+          vertical-align: top; 
+      }
+
+      /* -------------------------------------
+          BODY & CONTAINER
+      ------------------------------------- */
+
+      .body {
+        background-color: #fafafa;
+        width: 100%; 
+      }
+
+      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+      .container {
+        display: block;
+        margin: 0 auto !important;
+        /* makes it centered */
+        max-width: 580px;
+        padding: 10px;
+        width: 580px; 
+      }
+
+      /* This should also be a block element, so that it will fill 100% of the .container */
+      .content {
+        box-sizing: border-box;
+        display: block;
+        margin: 0 auto;
+        max-width: 580px;
+        padding: 10px; 
+      }
+
+      /* -------------------------------------
+          HEADER, FOOTER, MAIN
+      ------------------------------------- */
+      .main {
+        background: #ffffff;
+        border-radius: 3px;
+        width: 100%; 
+      }
+
+      .wrapper {
+        box-sizing: border-box;
+        padding: 20px; 
+      }
+
+      .content-block {
+        padding-bottom: 10px;
+        padding-top: 10px;
+      }
+
+      .footer {
+        clear: both;
+        margin-top: 10px;
+        text-align: center;
+        width: 100%; 
+      }
+        .footer td,
+        .footer p,
+        .footer span,
+        .footer a {
+          color: #999999;
+          font-size: 12px;
+          text-align: center; 
+      }
+
+      /* -------------------------------------
+          TYPOGRAPHY
+      ------------------------------------- */
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #000000;
+        font-family: sans-serif;
+        font-weight: 400;
+        line-height: 1.4;
+        margin: 0;
+        margin-bottom: 30px; 
+      }
+
+      h1 {
+        font-size: 35px;
+        font-weight: 300;
+        text-align: center;
+        text-transform: capitalize; 
+      }
+
+      p,
+      ul,
+      ol {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+        margin-bottom: 15px; 
+      }
+        p li,
+        ul li,
+        ol li {
+          list-style-position: inside;
+          margin-left: 5px; 
+      }
+
+      a {
+        color: #3498db;
+        text-decoration: underline; 
+      }
+
+      /* -------------------------------------
+          BUTTONS
+      ------------------------------------- */
+      .btn {
+        box-sizing: border-box;
+        width: 100%; }
+        .btn > tbody > tr > td {
+          padding-bottom: 15px; }
+        .btn table {
+          width: auto; 
+      }
+        .btn table td {
+          background-color: #ffffff;
+          border-radius: 5px;
+          text-align: center; 
+      }
+        .btn a {
+          background-color: #ffffff;
+          border: solid 1px #3498db;
+          border-radius: 5px;
+          box-sizing: border-box;
+          color: #3498db;
+          cursor: pointer;
+          display: inline-block;
+          font-size: 14px;
+          font-weight: bold;
+          margin: 0;
+          padding: 12px 25px;
+          text-decoration: none;
+          text-transform: capitalize; 
+      }
+
+      .btn-primary table td {
+        background-color: #3498db; 
+      }
+
+      .btn-primary a {
+        background-color: #3498db;
+        border-color: #3498db;
+        color: #ffffff; 
+      }
+
+      /* -------------------------------------
+          OTHER STYLES THAT MIGHT BE USEFUL
+      ------------------------------------- */
+      .last {
+        margin-bottom: 0; 
+      }
+
+      .first {
+        margin-top: 0; 
+      }
+
+      .align-center {
+        text-align: center; 
+      }
+
+      .align-right {
+        text-align: right; 
+      }
+
+      .align-left {
+        text-align: left; 
+      }
+
+      .clear {
+        clear: both; 
+      }
+
+      .mt0 {
+        margin-top: 0; 
+      }
+
+      .mb0 {
+        margin-bottom: 0; 
+      }
+
+      .preheader {
+        color: transparent;
+        display: none;
+        height: 0;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        mso-hide: all;
+        visibility: hidden;
+        width: 0; 
+      }
+
+      .powered-by a {
+        text-decoration: none; 
+      }
+
+      hr {
+        border: 0;
+        border-bottom: 1px solid #f6f6f6;
+        margin: 20px 0; 
+      }
+
+      /* -------------------------------------
+          RESPONSIVE AND MOBILE FRIENDLY STYLES
+      ------------------------------------- */
+      @media only screen and (max-width: 620px) {
+        table.body h1 {
+          font-size: 28px !important;
+          margin-bottom: 10px !important; 
+        }
+        table.body p,
+        table.body ul,
+        table.body ol,
+        table.body td,
+        table.body span,
+        table.body a {
+          font-size: 16px !important; 
+        }
+        table.body .wrapper,
+        table.body .article {
+          padding: 10px !important; 
+        }
+        table.body .content {
+          padding: 0 !important; 
+        }
+        table.body .container {
+          padding: 0 !important;
+          width: 100% !important; 
+        }
+        table.body .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important; 
+        }
+        table.body .btn table {
+          width: 100% !important; 
+        }
+        table.body .btn a {
+          width: 100% !important; 
+        }
+        table.body .img-responsive {
+          height: auto !important;
+          max-width: 100% !important;
+          width: auto !important; 
+        }
+      }
+
+      /* -------------------------------------
+          PRESERVE THESE STYLES IN THE HEAD
+      ------------------------------------- */
+      @media all {
+        .ExternalClass {
+          width: 100%; 
+        }
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%; 
+        }
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important; 
+        }
+        #MessageViewBody a {
+          color: inherit;
+          text-decoration: none;
+          font-size: inherit;
+          font-family: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+        }
+        .btn-primary table td:hover {
+          background-color: #34495e !important; 
+        }
+        .btn-primary a:hover {
+          background-color: #34495e !important;
+          border-color: #34495e !important; 
+        } 
+      }
+
+    </style>
+  </head>
+  <body>
+    <span class="preheader">Der Server wurde aktualisiert</span>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+      <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+          <div class="content">
+
+            <!-- START CENTERED WHITE CONTAINER -->
+            <table role="presentation" class="main">
+
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td class="wrapper">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <img class="logo" height="48" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAABGCAMAAABBu1nPAAAAgVBMVEUAAABDVGJEVWJFVmJHV2NJ
+                          WWRQXmhLWmVrdX1lcHdMW2VIWGNqdXxocnlSYGlUYWpXY2xweoFNXGZYZG1veH9ga3NeaXFdaXFi
+                          bXRWYmtaZm5QXmhdaXFfanNga3Npc3tPXWdcaHBkb3Zpc3pZZW5mcHhsdn5cZ3BQXWddaHFBVGLk
+                          oXYGAAAAKnRSTlMA/v369/DU6xxH5/QkOMvArwfhpw9sfXdftpbZg3FWLNyITjGePxiO2YhKbx3g
+                          AAAHvUlEQVR42uzXbW/aMBSG4eecJLwVyltpKaPQdi3d7v//A7cwSoJtCJWmSZNyfaoU1XEen2Mb
+                          tf6KLfCo1lXM+l3u1LoGcwl/VatZn0ICCrUaORh+10WtJjBawVSir1YDcmnFrZ6ZqtXAWfccIFer
+                          kQH3C9ot6ypjCinHt2olDec6KqAzwI13tRJy4Fl/7DCDXGo7ManPswaMtNdBumXehnVGjiTsXaU5
+                          a3Uhd+BGrZDzqAkwU8kAz8Efct7UOvVC6Vk/0J6B5EgiU+sUpjtc6rFTCdhMjY7GdNSKwpIx++6o
+                          lHPjQAZtYcUKOgWlvkqWS4b0yECtiIFrSqY9cwmkN0yt2C0DCRjrtxkHbv/TTWunf8ShcMYZKj3A
+                          UM5corhunhmY2UBf8Kq9de5Em+PHpZFMSYCut9RZHxzcKslZF+zDuddvQ5AydG1YVF4U+M5AKU4l
+                          SKsP0NWntyCr1Jy+U3JdBvoE9qiYESgUsUyas9CKvqQJkGVgK0PNMirxhOtrtLy/H7uT5kH04+Pw
+                          V1RQmHhT8X2jdKcQMYXcNlMHxw4b/Ap8m2Hbr2YF/dRSaY+LVBpFtRbkv0z1B59yXTCsPv1MED9J
+                          UGAKsMpAJSskQxqxVaMNoTDJOIi0KHmVCmCuyrd4/guOTJ/eeUpF+nAxLJEwUcjoSo5KmS03MNll
+                          qBmRUbUGBlDNkUtm0pw6q0pTwYZ2c273W17q1mrQx3N1SIJCK7DbMTA6jgos1eiJiCde3FEpI2b+
+                          sdNej1O92ihhX4/SWfFa71ZSSah08oZzwXvpRTFsa5BNDslvltLuSVcw/vCPsZ8uRQ4Ee8k9AQX9
+                          VbeqR16diGFrGNGiHO+Ka9UtKS2CLgyA/zyMqTO2jCRDytD14oW32iGTaCmtAfNssGbPzl4lbHH6
+                          gt65sCwdf+p7cwB7kNQNBgnZ5ZOVQn14EvhQX9A5Lf6C0jAqLEhmPEqfqdbT0Wv476e7DaGbkweJ
+                          d75HhRW7HKVuATMgw7S34vomDD54E39G+vxKZ6W6/sWwjAP3G+UQ3A1sk2yCXnQpS81O5624kZyt
+                          XpiqtOFVTbLaahYc9apHmKrjsOLBz4lJUBqVeRDWsh5WxsG4SmOg0i4OKz+OlAVTCnlTWBm5BFMN
+                          DmENeZP0zc09XyhpSFq9sD5f3U0m0HypnAWb24xquA4HU+09U1LtUVxYXNuFXZ1lZNHJP9YdYO5A
+                          oQQnyWvn3vFPi7vX4yacKsTeIHznth5x4isL9uIumB07e6xzgqlEmOhXO2e7nCYUhOHdPSAqEY1R
+                          jBo7Opo2fe//AtvBA+e7YDrTmU54fpGIgnv2490FnDG+k5jPQPGtbTavedRc/Y41CXNtusIByWo7
+                          8/I97ITlqw9jUwkbDWPvDSUo+qIwIh3cd2SAGmQsZUtVa7fjWblnI8EH9UmTd7EXZBt5V+d14gc1
+                          7rwMjUJFaRhzAZSyHIjd0JkCwVgkhJ1Tu6sQ9jR5mPLTZ1/rMHw+sy8QcGcTKJkiYixoTH2tKMHS
+                          qKEUAj7MHYNyI3Yvol2gxFOvZ83deo+Xui4EFidTF5gM6WEU4uxMNovsHxjryZ62yRDHAj0GC9E3
+                          bhPhBJOYIjXIq23nBFaO3oVfcbixpl13RA7n1ivEXpDS8XuzGUe//BgoaA01a/shlf4q8nOYpODU
+                          0nG0q00Pddg01JEIwsqphpXb4U9NyYiSQXeVaU469K29oHLk7cvMD3gs6wiBy7JLfr4WyVMpNUeU
+                          t2jzd4Jm1flduWd/rdZ/H4XqLkJ2Vg6wnLGEUHrdE8dTBBevvmuM/XjVE4XlJBAnbgSal6u4/PNS
+                          1qmu66M8h7oh7xlL8SRzg9Wk3CIU1ulFMqejR2y8f0OD4+d9qYn9eM7Mfj/MJu+JtkuBQzxtum6f
+                          KUbHnjqsEpumiYLNvNG4d9piUjH2A9po/3jbwHxP1h8lOczijvCBltweD66i1nAFyjb8rzl80u12
+                          ypr3phGYgBR3tYUSxNu5IqXYD1Zt2gVpIKAyp6DcnnKurREnXmQOPWlwxfAoKMHzhUEte/D35nrf
+                          RcBqSUmMKI42fv7pkSaaFJYICNugN3t5GDGyuHy59pVqidiPIrwoM4Vqh5wzqjvHfbBwqFCfu+Yb
+                          eK0gJxJfE8Gu66kQDCM765dunPiscGAk6+u1yVVr7fEMOmLQXbuQeI3cpIyavsD5Kp6t6N1fjplj
+                          O3i8xiM7+5MKlN8AKENHvVCAaof8IvSbDy3XwAzqJa5IggTuO6Cklcx72x6dzJ5H93Q/qMMoOZZV
+                          ogBNkpMlfo0Mb1ldMr5RjANDOoNf9RHWelnoszB2QZvuX9Od0iAyZNRHvaPH2DIggeMo3bGlODv5
+                          QG+qZgPgZhvj7X+myGuy/NY9ULFgaVTWQsD5cr8WgE/0xblNNLlXojdgEktG0grjU8AmhZyJ6KDM
+                          QIx9Vbbn8SngOyWoAaitHys4kgOPN5g2QHVKW5nyqjvsXO4AGJ8S0z9NQDdAVaW+er9glF0JYOnY
+                          0ldnhgVRcTcTN5WRAfCtYkCqBY1YVNg8twEIKNMpjc+ihORAd/MooMVDQVMaCcnt3jTTs5DRVClj
+                          CbVoqVX+T09W/FPywjT9eswxaqoUViNzFWrAmUYGchl/PWs4akxZw4HQyMgn+QWk7lL2dAvZtAAA
+                          AABJRU5ErkJggg==" alt="Patchouli - Stay secure">
+                        <h4>&nbsp;</h4>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>Der Server {{ .Machine.Fqdn }} wurde von <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a> aktualisiert.</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            <!-- END MAIN CONTENT AREA -->
+            </table>
+            <!-- END CENTERED WHITE CONTAINER -->
+            <!-- START FOOTER -->
+            <div class="footer">
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="content-block">
+                    <span class="apple-link">
+                      {{ .App }} v{{ .Version }}
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <!-- END FOOTER -->
+
+          </div>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+  </body>
+</html>

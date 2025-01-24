@@ -1,6 +1,8 @@
 package update
 
 import (
+	_ "embed"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/typomedia/patchouli/app/helper"
@@ -11,11 +13,14 @@ import (
 func Save(c *fiber.Ctx) error {
 	id := c.Params("id")
 
+	sendMail := false
 	if id == "new" {
 		id = helper.GenerateId()
+		sendMail = true
 	}
 
 	db := boltdb.New()
+	defer db.Close()
 	db.SetBucket("history")
 
 	var machine structs.Machine
@@ -46,8 +51,8 @@ func Save(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
-	defer db.Close()
-
+	if sendMail {
+		return c.Redirect("/machine/update/mail/send/" + update.Id)
+	}
 	return c.Redirect("/machine/update/list/" + machine.Id)
 }
