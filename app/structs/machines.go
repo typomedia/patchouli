@@ -29,4 +29,5 @@ type Machine struct {
 	Update   Update   `json:"update"` // last update
 	Days     int      `json:"days"`   // remaining days
 	Status   string   `json:"status"` // status color
+	Inactive bool     `json:"inactive"`
 }

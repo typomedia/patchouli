@@ -40,7 +40,9 @@ func List(c *fiber.Ctx) error {
 
 		machine.Update = update
 
-		Machines = append(Machines, machine)
+		if !machine.Inactive {
+			Machines = append(Machines, machine)
+		}
 
 	}
 

@@ -16,7 +16,11 @@
     <tbody>
     {{range .Machines}}
     <tr>
-        <td class="{{ .Status }}">{{ .Days }}</td>
+        {{ if .Inactive }}
+            <td> inactive ( {{ .Days }} ) </td>
+        {{ else }}
+            <td class="{{ .Status }}"> {{ .Days }} </td>
+        {{ end }}
         <td>{{ .Update.Date }}</td>
         <td>{{ .Name }}</td>
         <td>{{ .System.Name }}</td>

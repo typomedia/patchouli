@@ -9,6 +9,7 @@
         <th>Operator</th>
         <th>Department</th>
         <th>History</th>
+        <th>Status</th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +26,13 @@
         {{end}}
         <td>{{ .Operator.Department }}</td>
         <td><i class="ri-refresh-line"></i> <a href="/machine/update/list/{{ .Id }}">Update</a></td>
+        <td>
+            {{ if .Inactive }}
+                inactive
+            {{ else }}
+                active
+            {{ end }}
+        </td>
     </tr>
     {{end}}
     </tbody>
