@@ -59,7 +59,7 @@ func List(c *fiber.Ctx) error {
 
 	defer db.Close()
 
-	interval := config.Interval
+	interval := config.General.Interval
 	for i := range Machines {
 		currentDate := time.Now()
 

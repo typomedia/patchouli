@@ -77,10 +77,17 @@ a:hover {
 .warning {
   background: #f8f9c7;
 }
-.btn-danger {
-  background: #D93526;
+[data-tooltip]:not(a, button, input) {
+  border-bottom: var(--border-width) solid var(--table-border-color);
+  text-decoration: none;
+  cursor: help;
 }
-.btn-success {
-  background: #398712;
+i.mail-success {
+  color: #23af23;
+  font-size: 20pt;
+}
+i.mail-fail {
+  color: #d51616;
+  font-size: 20pt;
 }
 /*# sourceMappingURL=styles.css.map */

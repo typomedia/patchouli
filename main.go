@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
+	patchouli "github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/handler/api/csv"
 	"github.com/typomedia/patchouli/app/handler/api/htmx"
 	"github.com/typomedia/patchouli/app/handler/api/json"
@@ -29,21 +30,8 @@ var views embed.FS
 //go:embed public
 var public embed.FS
 
-type Application struct {
-	Name        string
-	Version     string
-	Author      string
-	Description string
-}
-
-var App = Application{
-	Name:        "Patchouli",
-	Version:     "0.1.1",
-	Author:      "Philipp Speck <philipp@typo.media>",
-	Description: "Patch Management Planner",
-}
-
 func main() {
+	App := patchouli.GetApp()
 	engine := html.NewFileSystem(http.FS(views), ".html")
 	engine.AddFunc("Name", func() string {
 		return App.Name
@@ -72,6 +60,7 @@ func main() {
 	app.Get("/machine/update/list/:id", update.List)
 	app.Get("/machine/update/new/:machine", update.New)
 	app.Get("/machine/update/edit/:id", update.Edit)
+	app.Get("/machine/update/mail/send/:id", update.Mail)
 	app.Post("/machine/update/save/:id", update.Save)
 
 	app.Get("/machine/deactivate/:id", machine.Deactivate)
