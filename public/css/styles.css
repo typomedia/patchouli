@@ -77,6 +77,14 @@ a:hover {
 .warning {
   background: #f8f9c7;
 }
+i.mail-success {
+  color: #23af23;
+  font-size: 20pt;
+}
+i.mail-fail {
+  color: #d51616;
+  font-size: 20pt;
+}
 .btn-danger {
   background: #D93526;
 }
@@ -87,26 +95,5 @@ a:hover {
   border-bottom: var(--border-width) solid var(--table-border-color);
   text-decoration: none;
   cursor: help;
-}
-i.mail-success {
-  color: #23af23;
-  font-size: 20pt;
-}
-i.mail-fail {
-  color: #d51616;
-  font-size: 20pt;
-}
-[data-tooltip]:not(a, button, input) {
-  border-bottom: var(--border-width) solid var(--table-border-color);
-  text-decoration: none;
-  cursor: help;
-}
-i.mail-success {
-  color: #23af23;
-  font-size: 20pt;
-}
-i.mail-fail {
-  color: #d51616;
-  font-size: 20pt;
 }
 /*# sourceMappingURL=styles.css.map */
