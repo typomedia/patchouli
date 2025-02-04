@@ -32,13 +32,14 @@ func List(c *fiber.Ctx) error {
 
 		lastUpdate, _ := db.GetLastByName(machine.Id, "history")
 
-		update := structs.Update{}
-		err = json.Unmarshal(lastUpdate, &update)
-		if err != nil {
-			log.Error(err)
+		if lastUpdate != nil {
+			update := structs.Update{}
+			err = json.Unmarshal(lastUpdate, &update)
+			if err != nil {
+				log.Error(err)
+			}
+			machine.Update = update
 		}
-
-		machine.Update = update
 
 		if !machine.Inactive {
 			Machines = append(Machines, machine)
