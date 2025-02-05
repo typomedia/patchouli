@@ -30,8 +30,12 @@ var views embed.FS
 //go:embed public
 var public embed.FS
 
+//go:embed public/html/mail/update.html
+var mailTemplate string
+
 func main() {
 	App := patchouli.GetApp()
+	App.MailTemplate = mailTemplate
 	engine := html.NewFileSystem(http.FS(views), ".html")
 	engine.AddFunc("Name", func() string {
 		return App.Name

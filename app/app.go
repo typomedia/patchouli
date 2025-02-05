@@ -3,10 +3,11 @@ package app
 var app *Application
 
 type Application struct {
-	Name        string
-	Version     string
-	Author      string
-	Description string
+	Name         string
+	Version      string
+	Author       string
+	Description  string
+	MailTemplate string
 }
 
 func new() *Application {

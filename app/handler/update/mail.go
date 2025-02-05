@@ -3,9 +3,6 @@ package update
 import (
 	_ "embed"
 	"fmt"
-	"io"
-	"net/http"
-
 	"github.com/XotoX1337/tinymail"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
@@ -57,17 +54,6 @@ func Mail(c *fiber.Ctx) error {
 		return err
 	}
 
-	resp, err := http.Get(c.BaseURL() + "/html/mail/update.html")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Error(err)
-	}
-
 	tplData := map[string]interface{}{
 		"Update":   update,
 		"Machine":  machine,
@@ -76,7 +62,7 @@ func Mail(c *fiber.Ctx) error {
 		"App":      patchouli.GetApp().Name,
 	}
 
-	msg, err := tinymail.FromTemplateString(tplData, string(body))
+	msg, err := tinymail.FromTemplateString(tplData, patchouli.GetApp().MailTemplate)
 	if err != nil {
 		log.Error(err)
 	}
