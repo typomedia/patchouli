@@ -8,7 +8,7 @@ run: tidy
 	go install github.com/air-verse/air@latest
 	air
 
-compile: tidy
+cross: tidy
 	GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o dist/patchouli-linux-amd64 .
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o dist/patchouli-macos-amd64 .
 	GOOS=windows GOARCH=amd64 go build -ldflags "-s -w" -o dist/patchouli-windows-amd64.exe .
