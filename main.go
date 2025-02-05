@@ -3,21 +3,25 @@ package main
 import (
 	"embed"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
+	patchouli "github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/handler/api/csv"
 	"github.com/typomedia/patchouli/app/handler/api/htmx"
 	"github.com/typomedia/patchouli/app/handler/api/json"
 	"github.com/typomedia/patchouli/app/handler/config"
 	"github.com/typomedia/patchouli/app/handler/dashboard"
+	dashboardFilter "github.com/typomedia/patchouli/app/handler/dashboard/filter"
 	"github.com/typomedia/patchouli/app/handler/machine"
+	machineFilter "github.com/typomedia/patchouli/app/handler/machine/filter"
 	"github.com/typomedia/patchouli/app/handler/operator"
 	"github.com/typomedia/patchouli/app/handler/system"
 	"github.com/typomedia/patchouli/app/handler/update"
-	"log"
-	"net/http"
-	"time"
 )
 
 //go:embed app/views
@@ -26,21 +30,12 @@ var views embed.FS
 //go:embed public
 var public embed.FS
 
-type Application struct {
-	Name        string
-	Version     string
-	Author      string
-	Description string
-}
-
-var App = Application{
-	Name:        "Patchouli",
-	Version:     "0.1.1",
-	Author:      "Philipp Speck <philipp@typo.media>",
-	Description: "Patch Management Planner",
-}
+//go:embed public/html/mail/update.html
+var mailTemplate string
 
 func main() {
+	App := patchouli.GetApp()
+	App.MailTemplate = mailTemplate
 	engine := html.NewFileSystem(http.FS(views), ".html")
 	engine.AddFunc("Name", func() string {
 		return App.Name
@@ -58,16 +53,22 @@ func main() {
 	})
 
 	app.Get("/", dashboard.List)
+	app.Get("/filter/operator/:id", dashboardFilter.Operator)
 
 	app.Get("/machine", machine.List)
 	app.Get("/machine/new", machine.New)
 	app.Get("/machine/edit/:id", machine.Edit)
+	app.Get("/machine/filter/operator/:id", machineFilter.Operator)
 	app.Post("/machine/save/:id", machine.Save)
 
 	app.Get("/machine/update/list/:id", update.List)
 	app.Get("/machine/update/new/:machine", update.New)
 	app.Get("/machine/update/edit/:id", update.Edit)
+	app.Get("/machine/update/mail/send/:id", update.Mail)
 	app.Post("/machine/update/save/:id", update.Save)
+
+	app.Get("/machine/deactivate/:id", machine.Deactivate)
+	app.Get("/machine/activate/:id", machine.Activate)
 
 	app.Get("/operator", operator.List)
 	app.Get("/operator/new", operator.New)

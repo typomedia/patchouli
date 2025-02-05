@@ -1,4 +1,4 @@
-package machine
+package filter
 
 import (
 	"encoding/json"
@@ -8,7 +8,8 @@ import (
 	"github.com/typomedia/patchouli/app/structs"
 )
 
-func List(c *fiber.Ctx) error {
+func Operator(c *fiber.Ctx) error {
+	id := c.Params("id")
 	db := boltdb.New()
 
 	// set bucket
@@ -17,10 +18,9 @@ func List(c *fiber.Ctx) error {
 		return err
 	}
 
-	machines, _ := db.GetAll("machine")
+	machines, _ := db.GetAllByOperatorId(id, "machine")
 
 	Machines := structs.Machines{}
-	inactiveMachines := structs.Machines{}
 
 	for _, v := range machines {
 		machine := structs.Machine{}
@@ -28,15 +28,9 @@ func List(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		if machine.Inactive {
-			inactiveMachines = append(inactiveMachines, machine)
-		} else {
-			Machines = append(Machines, machine)
+		Machines = append(Machines, machine)
 
-		}
 	}
-
-	Machines = append(Machines, inactiveMachines...)
 
 	defer db.Close()
 

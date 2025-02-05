@@ -1,6 +1,6 @@
 {{ template "header" . }}
 <div class="container">
-    <form action="/machine/update/save/new" method="post" id="edit">
+    <form action="/machine/update/save/new" method="post" id="edit" onsubmit="showProgress()">
         <input type="hidden" name="_method" value="PATCH">
         <div>
             <div>
@@ -19,8 +19,8 @@
                 <input type="date" name="date" id="date" value="{{ .Date }}" format="yyyy-mm-dd">
             </div>
             <div>
-                <label for="desc">Description</label>
-                <textarea name="desc" id="desc" cols="30" rows="3"></textarea>
+                <label for="description">Description</label>
+                <textarea name="description" id="description" cols="30" rows="3"></textarea>
             </div>
         </div>
     </form>
@@ -28,4 +28,11 @@
         <button type="submit" form="edit" class="btn btn-green">Save</button>
     </div>
 </div>
+<script>
+    function showProgress() {
+        let btn = document.querySelector('button[type=submit][form=edit]');
+        let progress = document.createElement('progress');
+        btn.replaceWith(progress)
+    }
+</script>
 {{ template "footer" . }}

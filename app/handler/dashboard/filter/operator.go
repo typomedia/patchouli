@@ -1,4 +1,4 @@
-package dashboard
+package filter
 
 import (
 	"encoding/json"
@@ -12,7 +12,8 @@ import (
 	"github.com/typomedia/patchouli/app/structs"
 )
 
-func List(c *fiber.Ctx) error {
+func Operator(c *fiber.Ctx) error {
+	id := c.Params("id")
 	db := boltdb.New()
 
 	err := db.SetBucket("machine")
@@ -20,7 +21,7 @@ func List(c *fiber.Ctx) error {
 		return err
 	}
 
-	machines, _ := db.GetAll("machine")
+	machines, _ := db.GetAllByOperatorId(id, "machine")
 
 	Machines := structs.Machines{}
 	for _, v := range machines {
@@ -32,18 +33,15 @@ func List(c *fiber.Ctx) error {
 
 		lastUpdate, _ := db.GetLastByName(machine.Id, "history")
 
-		if lastUpdate != nil {
-			update := structs.Update{}
-			err = json.Unmarshal(lastUpdate, &update)
-			if err != nil {
-				log.Error(err)
-			}
-			machine.Update = update
+		update := structs.Update{}
+		err = json.Unmarshal(lastUpdate, &update)
+		if err != nil {
+			log.Error(err)
 		}
 
-		if !machine.Inactive {
-			Machines = append(Machines, machine)
-		}
+		machine.Update = update
+
+		Machines = append(Machines, machine)
 
 	}
 
@@ -88,7 +86,6 @@ func List(c *fiber.Ctx) error {
 		Machines[i].Days = interval - int(currentDate.Sub(date).Hours()/24)
 
 	}
-
 	return c.Render("app/views/dashboard/list", fiber.Map{
 		"Machines": Machines,
 	})

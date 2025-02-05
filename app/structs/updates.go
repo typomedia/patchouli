@@ -8,4 +8,5 @@ type Update struct {
 	Date        string   `json:"date"`
 	Operator    Operator `json:"operator"`
 	Description string   `json:"description"`
+	Mail        bool     `json:"mail"`
 }
