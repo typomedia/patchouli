@@ -68,6 +68,21 @@ func (bolt *Bolt) Get(key string, result interface{}, bucket string) error {
 	return err
 }
 
+func (bolt *Bolt) GetConfig() (structs.Config, error) {
+	var data []byte
+	var result structs.Config
+	err := bolt.db.View(func(tx *bbolt.Tx) error {
+		bucket := tx.Bucket([]byte("config"))
+		data = bucket.Get([]byte("main"))
+		err := json.Unmarshal(data, &result)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	return result, err
+}
+
 func (bolt *Bolt) GetLastByName(id string, bucket string) ([]byte, error) {
 	var result []byte
 	err := bolt.db.View(func(tx *bbolt.Tx) error {

@@ -23,6 +23,14 @@ func Edit(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
+	var config structs.Config
+	config, err = db.GetConfig()
+	if err != nil {
+		return err
+	}
+	if machine.Interval == 0 {
+		machine.Interval = config.General.Interval
+	}
 	defer db.Close()
 
 	return c.Render("app/views/machine/edit", fiber.Map{

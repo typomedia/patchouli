@@ -11,8 +11,13 @@ import (
 func List(c *fiber.Ctx) error {
 	db := boltdb.New()
 
+	config, err := db.GetConfig()
+	if err != nil {
+		return err
+	}
+
 	// set bucket
-	err := db.SetBucket("machine")
+	err = db.SetBucket("machine")
 	if err != nil {
 		return err
 	}
@@ -27,6 +32,9 @@ func List(c *fiber.Ctx) error {
 		err = json.Unmarshal(v, &machine)
 		if err != nil {
 			return err
+		}
+		if machine.Interval == 0 {
+			machine.Interval = config.General.Interval
 		}
 		if machine.Inactive {
 			inactiveMachines = append(inactiveMachines, machine)

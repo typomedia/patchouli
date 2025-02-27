@@ -60,7 +60,6 @@ func List(c *fiber.Ctx) error {
 
 	defer db.Close()
 
-	interval := config.General.Interval
 	for i := range Machines {
 		currentDate := time.Now()
 
@@ -72,9 +71,17 @@ func List(c *fiber.Ctx) error {
 
 		Machines[i].Update.Date = helper.UnixToDateString(Machines[i].Update.Date)
 
-		date, err := time.Parse("2006-01-02", Machines[i].Update.Date)
+		date, err := time.Parse(time.DateOnly, Machines[i].Update.Date)
 		if err != nil {
 			log.Error(err)
+		}
+
+		var interval int
+		// check if machine has custom interval
+		if Machines[i].Interval != 0 {
+			interval = Machines[i].Interval
+		} else {
+			interval = config.General.Interval
 		}
 
 		Machines[i].Days = int(currentDate.Sub(date).Hours() / 24)

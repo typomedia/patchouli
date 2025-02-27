@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th><a href="/machine/new"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>Interval</th>
         <th>System</th>
         <th>Address</th>
         <th>Domain</th>
@@ -16,6 +17,7 @@
     {{range .Machines}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/machine/edit/{{ .Id }}">{{ .Name }}</a></td>
+        <td>{{ .Interval }}</td>
         <td>{{ .System.Name }}</td>
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>

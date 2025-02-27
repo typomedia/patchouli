@@ -3,7 +3,6 @@ package config
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
-	"github.com/typomedia/patchouli/app/structs"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -15,8 +14,10 @@ func Edit(c *fiber.Ctx) error {
 		return err
 	}
 
-	var config structs.Config
-	db.Get("main", &config, "config")
+	config, err := db.GetConfig()
+	if err != nil {
+		return err
+	}
 	if config.Smtp.Password != "" {
 		passwordHash, err := bcrypt.GenerateFromPassword([]byte(config.Smtp.Password), bcrypt.DefaultCost)
 		if err != nil {
