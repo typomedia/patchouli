@@ -3,6 +3,8 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/Showmax/go-fqdn"
+	"github.com/typomedia/patchouli/app/notifier"
 	"log"
 	"net/http"
 	"time"
@@ -33,9 +35,13 @@ var public embed.FS
 //go:embed public/html/mail/update.html
 var mailTemplate string
 
+//go:embed public/html/mail/notify.html
+var notifyTemplate string
+
 func main() {
 	App := patchouli.GetApp()
 	App.MailTemplate = mailTemplate
+	App.NotifyTemplate = notifyTemplate
 	engine := html.NewFileSystem(http.FS(views), ".html")
 	engine.AddFunc("Name", func() string {
 		return App.Name
@@ -94,6 +100,29 @@ func main() {
 		Root:       http.FS(public),
 		PathPrefix: "public",
 	}))
+
+	app.Hooks().OnListen(func(listenData fiber.ListenData) error {
+		if fiber.IsChild() {
+			return nil
+		}
+		scheme := "http"
+		if listenData.TLS {
+			scheme = "https"
+		}
+
+		hostname, err := fqdn.FqdnHostname()
+		if err != nil {
+			return err
+		}
+
+		n := notifier.Notifier{
+			Hostname: scheme + "://" + hostname,
+		}
+		g := gron.New()
+		g.Add(gron.Every(24*time.Hour), n)
+		g.Start()
+		return nil
+	})
 
 	log.Fatal(app.Listen(":5000"))
 }
