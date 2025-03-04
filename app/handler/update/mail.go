@@ -36,8 +36,7 @@ func Mail(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
-	var config structs.Config
-	err = db.Get("main", &config, "config")
+	config, err := db.GetConfig()
 	if err != nil {
 		log.Error(err)
 	}
