@@ -5,6 +5,9 @@
 
 @font-family: 'Signika', sans-serif;
 @color-primary: rgb(65, 84, 98);
+@color-danger: #ffcccc;
+@color-warning: #ccfecc;
+@color-success: #f8f9c7;
 
 body {
   font-family: @font-family;
@@ -80,15 +83,19 @@ a:hover {
 }
 
 .danger {
-  background: #ffcccc;
+  background: @color-danger;
 }
 
 .success {
-  background: #ccfecc;
+  background: @color-success;
 }
 
 .warning {
-  background: #f8f9c7;
+  background: @color-warning;
+}
+
+i.ri-error-warning-line {
+    color: #D93526;
 }
 
 i.mail-success {
