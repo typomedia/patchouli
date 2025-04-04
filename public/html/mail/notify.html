@@ -165,7 +165,7 @@
           border-radius: 5px;
           text-align: center; 
       }
-        .btn a {
+      .btn a {
           background-color: #ffffff;
           border: solid 1px #3498db;
           border-radius: 5px;
@@ -337,7 +337,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">Der Server wurde aktualisiert</span>
+    <span class="preheader">{{.Operator.Firstname}}, deine Server brauchen Dich!</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -398,7 +398,7 @@
                     </tr>
                     <tr>
                       <td>
-                        <p>Hey, {{ .Operator.Name }}</p>
+                        <p>Hey, {{ .Operator.Firstname }}</p>
                         <p>folgende Server benötigen ein Update:</p>
                         <table>
                           <tr>
@@ -414,9 +414,12 @@
                           </tr>
                           {{ end }}
                         </table>
+                        {{ if .Hostname }}
                         <p>&nbsp;</p>
-                        <p>Du kannst deine Machines unter folgendem Link abrufen:</p>
-                        <p>{{.Host}}/filter/operator/{{ .Operator.Id }}</p>
+                        <div style="text-align:center;" class="btn btn-primary">
+                          <a href="{{.Hostname}}/filter/operator/{{ .Operator.Id }}">ANZEIGEN</a>
+                        </div>
+                        {{ end }}
                       </td>
                     </tr>
                   </table>

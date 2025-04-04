@@ -3,7 +3,9 @@ package notifier
 import (
 	"github.com/XotoX1337/tinymail"
 	"github.com/gofiber/fiber/v2/log"
-	patchouli "github.com/typomedia/patchouli/app"
+	"github.com/typomedia/patchouli/app"
+
+	"github.com/typomedia/patchouli/app/encryption"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 )
@@ -11,7 +13,6 @@ import (
 const NOTIFY_DAYS = 7
 
 type Notifier struct {
-	Hostname  string
 	Operators map[string]structs.Machines
 }
 
@@ -19,10 +20,7 @@ func (n Notifier) Run() {
 	db := boltdb.New()
 	defer db.Close()
 
-	config, err := db.GetConfig()
-	if err != nil {
-		log.Fatal(err)
-	}
+	config := app.GetApp().Config
 
 	machines, err := db.GetActiveMachines()
 	if err != nil {
@@ -36,9 +34,13 @@ func (n Notifier) Run() {
 		n.Operators[machine.Operator.Id] = append(n.Operators[machine.Operator.Id], machine)
 	}
 
+	smtpPasswd, err := encryption.DecryptString(config.Smtp.Password)
+	if err != nil {
+		return
+	}
 	opts := tinymail.MailerOpts{
 		User:     config.Smtp.Username,
-		Password: config.Smtp.Password,
+		Password: smtpPasswd,
 		Host:     config.Smtp.Host,
 		Port:     config.Smtp.Port,
 	}
@@ -58,12 +60,12 @@ func (n Notifier) Run() {
 		tplData := map[string]interface{}{
 			"Machines": machines,
 			"Operator": operator,
-			"Host":     n.Hostname,
-			"Version":  patchouli.GetApp().Version,
-			"App":      patchouli.GetApp().Name,
+			"Hostname": config.General.Hostname,
+			"Version":  app.GetApp().Version,
+			"App":      app.GetApp().Name,
 		}
 
-		msg, err := tinymail.FromTemplateString(tplData, patchouli.GetApp().NotifyTemplate)
+		msg, err := tinymail.FromTemplateString(tplData, app.GetApp().NotifyTemplate)
 		if err != nil {
 			log.Error(err)
 		}
@@ -78,6 +80,5 @@ func (n Notifier) Run() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		break
 	}
 }
