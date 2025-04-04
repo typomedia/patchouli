@@ -81,6 +81,9 @@ func main() {
 	app.Get("/operator/edit/:id", operator.Edit)
 	app.Post("/operator/save/:id", operator.Save)
 
+	app.Get("/operator/deactivate/:id", operator.Deactivate)
+	app.Get("/operator/activate/:id", operator.Activate)
+
 	app.Get("/system", system.List)
 	app.Get("/system/new", system.New)
 	app.Get("/system/edit/:id", system.Edit)

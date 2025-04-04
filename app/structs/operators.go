@@ -9,6 +9,7 @@ type Operator struct {
 	Name       string `json:"operator"`
 	Department string `json:"department"`
 	Email      string `json:"email"`
+	Inactive   bool   `json:"inactive"`
 }
 
 func (o Operator) Firstname() string {

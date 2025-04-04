@@ -54,19 +54,16 @@
             </div>
         </div>
     </form>
-    {{ if .Machine.Inactive}}
-        <form action="/machine/activate/{{.Machine.Id}}" method="get" id="activate">
-            <input type="hidden" name="_method" value="PATCH">
-        </form>
-    {{ else }}
-        <form action="/machine/deactivate/{{.Machine.Id}}" method="get" id="deactivate">
-            <input type="hidden" name="_method" value="PATCH">
-        </form>
-    {{ end }}
     <div class="grid">
         {{ if .Machine.Inactive }}
+            <form style="display:none;" action="/machine/activate/{{.Machine.Id}}" method="get" id="activate">
+                <input type="hidden" name="_method" value="PATCH">
+            </form>
             <button type="submit" form="activate" class="btn-success">Activate</button>
         {{ else }}
+            <form style="display:none;" action="/machine/deactivate/{{.Machine.Id}}" method="get" id="deactivate">
+                <input type="hidden" name="_method" value="PATCH">
+            </form>
             <button type="submit" form="deactivate" class="btn-danger">Deactivate</button>
         {{ end }}
         <button type="submit" form="edit" class="btn btn-green">Save</button>

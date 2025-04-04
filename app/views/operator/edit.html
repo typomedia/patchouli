@@ -2,6 +2,7 @@
 <div class="container">
     <form action="/operator/save/{{.Operator.Id}}" method="post" id="edit">
         <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="inactive" value="{{.Operator.Inactive}}">
         <div>
             <div>
                 <label for="name">Name</label>
@@ -14,9 +15,21 @@
             <div>
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" value="{{.Operator.Email}}">
+            </div>
         </div>
     </form>
-    <div>
+    <div class="grid">
+        {{ if .Operator.Inactive }}
+        <form style="display:none;" action="/operator/activate/{{.Operator.Id}}" method="get" id="activate">
+            <input type="hidden" name="_method" value="PATCH">
+        </form>
+        <button type="submit" form="activate" class="btn-success">Activate</button>
+        {{ else }}
+        <form style="display:none;" action="/operator/deactivate/{{.Operator.Id}}" method="get" id="deactivate">
+            <input type="hidden" name="_method" value="PATCH">
+        </form>
+        <button type="submit" form="deactivate" class="btn-danger">Deactivate</button>
+        {{ end }}
         <button type="submit" form="edit" class="btn btn-green">Save</button>
     </div>
 </div>

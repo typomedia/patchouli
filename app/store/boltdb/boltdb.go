@@ -257,6 +257,27 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 	return Machines, nil
 }
 
+func (bolt *Bolt) GetAllOperators() (structs.Operators, error) {
+	operators, _ := bolt.GetAll("operator")
+
+	Operators := structs.Operators{}
+	InactiveOperators := structs.Operators{}
+	for _, v := range operators {
+		operator := structs.Operator{}
+		err := json.Unmarshal(v, &operator)
+		if err != nil {
+			return nil, err
+		}
+
+		if operator.Inactive {
+			InactiveOperators = append(InactiveOperators, operator)
+		} else {
+			Operators = append(Operators, operator)
+		}
+	}
+	return append(Operators, InactiveOperators...), nil
+}
+
 func (bolt *Bolt) GetOperatorById(id string) (structs.Operator, error) {
 	var operator structs.Operator
 	err := bolt.Get(id, &operator, "operator")
