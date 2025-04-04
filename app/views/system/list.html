@@ -1,8 +1,9 @@
 {{ template "header" . }}
-<table>
+<table id="sort">
     <thead>
     <tr>
         <th><a href="/system/new"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>Machines</th>
         <th>LTS</th>
         <th>EOL</th>
     </tr>
@@ -11,6 +12,7 @@
     {{range .Systems}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/system/edit/{{.Id}}">{{.Name}}</a></td>
+        <td><a href="/machine/filter/system/{{.Id}}"><i class="ri-menu-search-line"></i>{{ .MachineCount }}</a></td>
         <td>
             {{ if .LTS }}
             <span role="button" class="primary">True</span>
@@ -23,4 +25,7 @@
     {{end}}
     </tbody>
 </table>
+<script>
+    new Tablesort(document.getElementById('sort'));
+</script>
 {{ template "footer" . }}
