@@ -2,6 +2,7 @@ package machine
 
 import (
 	"encoding/json"
+	"github.com/typomedia/patchouli/app"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
@@ -11,13 +12,10 @@ import (
 func List(c *fiber.Ctx) error {
 	db := boltdb.New()
 
-	config, err := db.GetConfig()
-	if err != nil {
-		return err
-	}
+	config := app.GetApp().Config
 
 	// set bucket
-	err = db.SetBucket("machine")
+	err := db.SetBucket("machine")
 	if err != nil {
 		return err
 	}
