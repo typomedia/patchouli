@@ -3,15 +3,12 @@ package main
 import (
 	"embed"
 	"fmt"
-	"github.com/Showmax/go-fqdn"
-	"github.com/typomedia/patchouli/app/notifier"
-	"log"
-	"net/http"
-	"time"
-
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
+	"github.com/roylee0704/gron"
+	"github.com/roylee0704/gron/xtime"
 	patchouli "github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/handler/api/csv"
 	"github.com/typomedia/patchouli/app/handler/api/htmx"
@@ -24,6 +21,9 @@ import (
 	"github.com/typomedia/patchouli/app/handler/operator"
 	"github.com/typomedia/patchouli/app/handler/system"
 	"github.com/typomedia/patchouli/app/handler/update"
+	"github.com/typomedia/patchouli/app/notifier"
+	"net/http"
+	"time"
 )
 
 //go:embed app/views
@@ -105,21 +105,10 @@ func main() {
 		if fiber.IsChild() {
 			return nil
 		}
-		scheme := "http"
-		if listenData.TLS {
-			scheme = "https"
-		}
 
-		hostname, err := fqdn.FqdnHostname()
-		if err != nil {
-			return err
-		}
-
-		n := notifier.Notifier{
-			Hostname: scheme + "://" + hostname,
-		}
+		n := notifier.Notifier{}
 		g := gron.New()
-		g.Add(gron.Every(24*time.Hour), n)
+		g.Add(gron.Every(1*xtime.Week), n)
 		g.Start()
 		return nil
 	})
