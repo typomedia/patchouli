@@ -65,6 +65,7 @@ func main() {
 	app.Get("/machine/new", machine.New)
 	app.Get("/machine/edit/:id", machine.Edit)
 	app.Get("/machine/filter/operator/:id", machineFilter.Operator)
+	app.Get("/machine/filter/system/:id", machineFilter.System)
 	app.Post("/machine/save/:id", machine.Save)
 
 	app.Get("/machine/update/list/:id", update.List)
