@@ -144,10 +144,10 @@ func (bolt *Bolt) GetAll(bucket string) ([][]byte, error) {
 	return result, err
 }
 
-func (bolt *Bolt) GetAllByName(id string, bucket string) ([][]byte, error) {
+func (bolt *Bolt) GetAllUpdatesByMachineId(id string) ([][]byte, error) {
 	var result [][]byte
 	err := bolt.db.View(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte(bucket))
+		bucket := tx.Bucket([]byte("history"))
 		cursor := bucket.Cursor()
 		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
 			var update structs.Update
@@ -164,54 +164,64 @@ func (bolt *Bolt) GetAllByName(id string, bucket string) ([][]byte, error) {
 	return result, err
 }
 
-func (bolt *Bolt) GetAllByOperatorId(id string, bucket string) ([][]byte, error) {
-	var result [][]byte
-	err := bolt.db.View(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte(bucket))
-		cursor := bucket.Cursor()
-		for k, v := cursor.First(); k != nil; k, v = cursor.Next() {
-			var machine structs.Machine
-			err := json.Unmarshal(v, &machine)
-			if err != nil {
-				return err
-			}
-			if machine.Operator.Id == id {
-				result = append(result, v)
-			}
+func (bolt *Bolt) GetAllMachinesByOperatorId(id string) (structs.Machines, error) {
+	var result structs.Machines
+	machines, err := bolt.GetAllMachines(false)
+	if err != nil {
+		return nil, err
+	}
+	for _, m := range machines {
+		if m.Operator.Id != id {
+			continue
 		}
-		return nil
-	})
+		result = append(result, m)
+	}
+	return result, nil
+}
+
+func (bolt *Bolt) GetAllMachinesBySystemId(systemId string) (structs.Machines, error) {
+	var result structs.Machines
+	machines, err := bolt.GetAllMachines(false)
+
+	for _, m := range machines {
+		if m.System.Id != systemId {
+			continue
+		}
+		result = append(result, m)
+	}
 	return result, err
 }
 
-func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
-	machines, _ := bolt.GetAll("machine")
-
-	Machines := structs.Machines{}
+func (bolt *Bolt) GetAllMachines(onlyActive bool) (structs.Machines, error) {
+	var result structs.Machines
+	config, err := bolt.GetConfig()
+	machines, err := bolt.GetAll("machine")
+	if err != nil {
+		return nil, err
+	}
 	for _, v := range machines {
-		machine := structs.Machine{}
-		err := json.Unmarshal(v, &machine)
+		m := structs.Machine{}
+		err = json.Unmarshal(v, &m)
 		if err != nil {
 			return nil, err
 		}
-
-		lastUpdate, _ := bolt.GetLastByName(machine.Id, "history")
-
-		if lastUpdate != nil {
-			update := structs.Update{}
-			err = json.Unmarshal(lastUpdate, &update)
-			if err != nil {
-				return nil, err
-			}
-			machine.Update = update
+		if m.Inactive && onlyActive {
+			continue
 		}
-
-		if !machine.Inactive {
-			Machines = append(Machines, machine)
+		if m.Interval == 0 {
+			m.Interval = config.General.Interval
 		}
+		result = append(result, m)
 	}
-	// sort machines by oldest update first
-	sort.Sort(structs.ByDate(Machines))
+
+	return result, nil
+}
+
+func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
+	Machines, err := bolt.GetAllMachines(true)
+	if err != nil {
+		return nil, err
+	}
 
 	config, err := bolt.GetConfig()
 	if err != nil {
@@ -220,6 +230,17 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 
 	for i := range Machines {
 		currentDate := time.Now()
+
+		lastUpdate, _ := bolt.GetLastByName(Machines[i].Id, "history")
+
+		if lastUpdate != nil {
+			update := structs.Update{}
+			err = json.Unmarshal(lastUpdate, &update)
+			if err != nil {
+				return nil, err
+			}
+			Machines[i].Update = update
+		}
 
 		if Machines[i].Update.Date == "" {
 			Machines[i].Update.Date = "0000-00-00"
@@ -254,6 +275,11 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 
 	}
 
+	// sort machines by oldest update first
+	sort.Slice(Machines, func(i, j int) bool {
+		return Machines[i].Update.Date < Machines[j].Update.Date
+	})
+
 	return Machines, nil
 }
 
@@ -285,6 +311,26 @@ func (bolt *Bolt) GetOperatorById(id string) (structs.Operator, error) {
 		return operator, err
 	}
 	return operator, nil
+}
+
+func (bolt *Bolt) GetMachinesBySystem(systemId string) (structs.Machines, error) {
+	machines, err := bolt.GetAll("machine")
+	if err != nil {
+		return nil, err
+	}
+	machinesOfSystem := structs.Machines{}
+	for _, v := range machines {
+		machine := structs.Machine{}
+		err := json.Unmarshal(v, &machine)
+		if err != nil {
+			return nil, err
+		}
+		if machine.System.Id == systemId {
+			machinesOfSystem = append(machinesOfSystem, machine)
+		}
+	}
+
+	return machinesOfSystem, nil
 }
 
 func (bolt *Bolt) Close() error {
