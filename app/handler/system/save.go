@@ -29,6 +29,16 @@ func Save(c *fiber.Ctx) error {
 
 	system.Id = id
 
+	machinesOfSystem, err := db.GetMachinesBySystem(system.Id)
+	if err != nil {
+		log.Error(err)
+	}
+
+	for _, m := range machinesOfSystem {
+		machine := m
+		machine.System = system
+		db.Set(machine.Id, machine, "machine")
+	}
 	db.Set(id, system, "systems")
 
 	defer db.Close()
