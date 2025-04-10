@@ -10,7 +10,15 @@
       ------------------------------------- */
       
       /*All the styling goes here*/
-      
+
+      code {
+        font-family: Consolas,"courier new",serif;
+        color: crimson;
+        background-color: #f1f1f1;
+        padding: 2px;
+        font-size: 105%;
+      }
+
       img {
         border: none;
         -ms-interpolation-mode: bicubic;
@@ -399,6 +407,12 @@
                     <tr>
                       <td>
                         <p>Der Server {{ .Machine.Fqdn }} wurde von <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a> aktualisiert.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>Beschreibung:</p>
+                        <code>apt update & upgrade</code>
                       </td>
                     </tr>
                   </table>
