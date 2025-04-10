@@ -13,6 +13,10 @@ type Operator struct {
 	MachineCount int    `json:"machine_count"`
 }
 
+func (o Operator) CanDeactivate() bool {
+	return o.MachineCount == 0
+}
+
 func (o Operator) Firstname() string {
 	return strings.Split(o.Name, " ")[0]
 }
