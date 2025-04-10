@@ -80,6 +80,9 @@ a:hover {
 i.ri-error-warning-line {
   color: #D93526;
 }
+i.ri-checkbox-circle-line {
+  color: #398712;
+}
 i.mail-success {
   color: #23af23;
   font-size: 20pt;
