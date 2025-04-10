@@ -1,12 +1,10 @@
 package system
 
 import (
-	"cmp"
 	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
-	"slices"
 )
 
 func List(c *fiber.Ctx) error {
@@ -33,9 +31,7 @@ func List(c *fiber.Ctx) error {
 		system.MachineCount = len(machinesOfSystem)
 		Systems = append(Systems, system)
 	}
-	slices.SortFunc(Systems, func(a, b structs.System) int {
-		return cmp.Compare(b.MachineCount, a.MachineCount)
-	})
+	Systems.OrderedBy(Systems.ByName(), Systems.ByEOL()).Sort(Systems)
 	defer db.Close()
 
 	return c.Render("app/views/system/list", fiber.Map{
