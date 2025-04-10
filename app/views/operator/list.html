@@ -17,9 +17,15 @@
         <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Email }}">{{ .Email }}</a></td>
         <td>
             <a href="/filter/operator/{{ .Id }}">
-                <span role="button" class="primary">
-                    {{ .MachineCount }}
-                </span>
+                {{ if eq .MachineCount 0 }}
+                    <span role="button" class="secondary">
+                        {{ .MachineCount }}
+                    </span>
+                {{ else }}
+                    <span role="button" class="primary">
+                        {{ .MachineCount }}
+                    </span>
+                {{ end }}
             </a>
         </td>
         <td>
