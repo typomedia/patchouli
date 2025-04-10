@@ -3,9 +3,9 @@
     <thead>
     <tr>
         <th><a href="/operator/new"><i class="ri-edit-box-fill"></i> New</a></th>
-        <th>Machines</th>
         <th>Department</th>
         <th>Email</th>
+        <th>Machines</th>
         <th>Status</th>
     </tr>
     </thead>
@@ -13,6 +13,8 @@
     {{range .Operators}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/operator/edit/{{.Id}}">{{.Name}}</a></td>
+        <td>{{.Department}}</td>
+        <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Email }}">{{ .Email }}</a></td>
         <td>
             <a href="/filter/operator/{{ .Id }}">
                 <span role="button" class="primary">
@@ -20,8 +22,6 @@
                 </span>
             </a>
         </td>
-        <td>{{.Department}}</td>
-        <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Email }}">{{ .Email }}</a></td>
         <td>
             {{ if .Inactive }}
                 <span role="button" class="secondary">inactive</span>
