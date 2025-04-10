@@ -97,6 +97,9 @@ i.mail-fail {
 .btn-success {
   background: #398712;
 }
+[role="button"] {
+  font-size: 0.875rem;
+}
 [data-tooltip]:not(a, button, input) {
   border-bottom: var(--border-width) solid var(--table-border-color);
   text-decoration: none;
