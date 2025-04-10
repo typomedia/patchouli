@@ -333,6 +333,26 @@ func (bolt *Bolt) GetMachinesBySystem(systemId string) (structs.Machines, error)
 	return machinesOfSystem, nil
 }
 
+func (bolt *Bolt) GetMachinesByOperator(operatorId string) (structs.Machines, error) {
+	machines, err := bolt.GetAll("machine")
+	if err != nil {
+		return nil, err
+	}
+	machinesOfOperator := structs.Machines{}
+	for _, v := range machines {
+		machine := structs.Machine{}
+		err := json.Unmarshal(v, &machine)
+		if err != nil {
+			return nil, err
+		}
+		if machine.Operator.Id == operatorId {
+			machinesOfOperator = append(machinesOfOperator, machine)
+		}
+	}
+
+	return machinesOfOperator, nil
+}
+
 func (bolt *Bolt) Close() error {
 	return bolt.db.Close()
 }

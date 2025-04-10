@@ -5,11 +5,12 @@ import "strings"
 type Operators []Operator
 
 type Operator struct {
-	Id         string `json:"id"`
-	Name       string `json:"operator"`
-	Department string `json:"department"`
-	Email      string `json:"email"`
-	Inactive   bool   `json:"inactive"`
+	Id           string `json:"id"`
+	Name         string `json:"operator"`
+	Department   string `json:"department"`
+	Email        string `json:"email"`
+	Inactive     bool   `json:"inactive"`
+	MachineCount int    `json:"machine_count"`
 }
 
 func (o Operator) Firstname() string {
