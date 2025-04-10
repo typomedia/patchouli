@@ -3,10 +3,10 @@
     <thead>
     <tr>
         <th><a href="/machine/new"><i class="ri-edit-box-fill"></i> New</a></th>
-        <th>Interval</th>
         <th>System</th>
         <th>Address</th>
         <th>Domain</th>
+        <th>Interval</th>
         <th>Operator</th>
         <th>Department</th>
         <th>History</th>
@@ -17,7 +17,6 @@
     {{range .Machines}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/machine/edit/{{ .Id }}">{{ .Name }}</a></td>
-        <td>{{ .Interval }}</td>
         <td>
             {{ if .System.IsEOL }}
                 <em
@@ -31,6 +30,7 @@
         </td>
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>
+        <td>{{ .Interval }}</td>
         {{if .Operator.Email}}
             <td><i class="ri-menu-search-line"></i> <a href="/machine/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
         {{else}}
