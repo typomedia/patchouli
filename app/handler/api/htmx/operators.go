@@ -26,6 +26,9 @@ func Operators(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
+		if operator.Inactive {
+			continue
+		}
 		Operators = append(Operators, operator)
 	}
 
