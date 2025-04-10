@@ -40,9 +40,9 @@
         <td><i class="ri-refresh-line"></i> <a href="/machine/update/list/{{ .Id }}">Update</a></td>
         <td>
             {{ if .Inactive }}
-                inactive
+                <span role="button" class="secondary">inactive</span>
             {{ else }}
-                active
+                <span role="button" class="primary">active</span>
             {{ end }}
         </td>
     </tr>

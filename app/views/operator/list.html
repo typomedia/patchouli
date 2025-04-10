@@ -24,9 +24,9 @@
         <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Email }}">{{ .Email }}</a></td>
         <td>
             {{ if .Inactive }}
-            inactive
+                <span role="button" class="secondary">inactive</span>
             {{ else }}
-            active
+                <span role="button" class="primary">active</span>
             {{ end }}
         </td>
     </tr>
