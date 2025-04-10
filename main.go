@@ -7,8 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
-	"github.com/roylee0704/gron"
-	"github.com/roylee0704/gron/xtime"
+	"github.com/robfig/cron/v3"
 	patchouli "github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/handler/api/csv"
 	"github.com/typomedia/patchouli/app/handler/api/htmx"
@@ -111,9 +110,12 @@ func main() {
 		}
 
 		n := notifier.Notifier{}
-		g := gron.New()
-		g.Add(gron.Every(1*xtime.Week), n)
-		g.Start()
+		c := cron.New()
+		_, err := c.AddFunc("0 5 * * 1", n.Run)
+		if err != nil {
+			return err
+		}
+		c.Start()
 		return nil
 	})
 
