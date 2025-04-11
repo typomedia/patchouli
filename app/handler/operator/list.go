@@ -6,6 +6,7 @@ import (
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 	"slices"
+	"strings"
 )
 
 func List(c *fiber.Ctx) error {
@@ -27,7 +28,7 @@ func List(c *fiber.Ctx) error {
 	}
 
 	slices.SortFunc(Operators, func(a, b structs.Operator) int {
-		return cmp.Compare(a.Name, b.Name)
+		return cmp.Compare(strings.ToLower(a.Name), strings.ToLower(b.Name))
 	})
 
 	defer db.Close()
