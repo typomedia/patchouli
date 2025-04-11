@@ -24,7 +24,11 @@ func List(c *fiber.Ctx) error {
 		}
 	}
 
-	slices.SortFunc(Machines, func(a, b structs.Machine) int {
+	slices.SortFunc(active, func(a, b structs.Machine) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+
+	slices.SortFunc(inactive, func(a, b structs.Machine) int {
 		return cmp.Compare(a.Name, b.Name)
 	})
 
