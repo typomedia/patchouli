@@ -122,9 +122,9 @@ func (bolt *Bolt) Set(key string, value interface{}, bucket string) error {
 	return err
 }
 
-func (bolt *Bolt) Delete(key string) error {
+func (bolt *Bolt) Delete(key string, bucket string) error {
 	err := bolt.db.Update(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte("machine"))
+		bucket := tx.Bucket([]byte(bucket))
 		err := bucket.Delete([]byte(key))
 		return err
 	})
@@ -331,6 +331,26 @@ func (bolt *Bolt) GetMachinesBySystem(systemId string) (structs.Machines, error)
 	}
 
 	return machinesOfSystem, nil
+}
+
+func (bolt *Bolt) GetMachinesByOperator(operatorId string) (structs.Machines, error) {
+	machines, err := bolt.GetAll("machine")
+	if err != nil {
+		return nil, err
+	}
+	machinesOfOperator := structs.Machines{}
+	for _, v := range machines {
+		machine := structs.Machine{}
+		err := json.Unmarshal(v, &machine)
+		if err != nil {
+			return nil, err
+		}
+		if machine.Operator.Id == operatorId {
+			machinesOfOperator = append(machinesOfOperator, machine)
+		}
+	}
+
+	return machinesOfOperator, nil
 }
 
 func (bolt *Bolt) Close() error {

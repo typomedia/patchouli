@@ -1,18 +1,18 @@
 package system
 
 import (
+	"errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
-	"github.com/typomedia/patchouli/app/helper"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 )
 
-func Save(c *fiber.Ctx) error {
+func Delete(c *fiber.Ctx) error {
 	id := c.Params("id")
 
-	if id == "new" {
-		id = helper.GenerateId()
+	if id == "" {
+		log.Error(errors.New("id is required"))
 	}
 
 	db := boltdb.New()
@@ -22,25 +22,15 @@ func Save(c *fiber.Ctx) error {
 	}
 
 	system := structs.System{}
-	err = c.BodyParser(&system)
+	err = db.Get(id, &system, "systems")
 	if err != nil {
 		log.Error(err)
 	}
 
-	system.Id = id
-
-	machinesOfSystem, err := db.GetMachinesBySystem(system.Id)
+	err = db.Delete(system.Id, "systems")
 	if err != nil {
 		log.Error(err)
 	}
-
-	for _, m := range machinesOfSystem {
-		machine := m
-		machine.System = system
-		db.Set(machine.Id, machine, "machine")
-	}
-	db.Set(id, system, "systems")
-
 	defer db.Close()
 
 	return c.Redirect("/system")

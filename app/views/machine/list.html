@@ -3,10 +3,10 @@
     <thead>
     <tr>
         <th><a href="/machine/new"><i class="ri-edit-box-fill"></i> New</a></th>
-        <th>Interval</th>
         <th>System</th>
         <th>Address</th>
         <th>Domain</th>
+        <th>Interval</th>
         <th>Operator</th>
         <th>Department</th>
         <th>History</th>
@@ -17,18 +17,20 @@
     {{range .Machines}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/machine/edit/{{ .Id }}">{{ .Name }}</a></td>
-        <td>{{ .Interval }}</td>
         <td>
             {{ if .System.IsEOL }}
                 <em
                     data-tooltip="{{ .System.Name}} has reached EOL on {{ .System.EOL }}">
                     <i class="ri-error-warning-line color-danger"></i>
                 </em>
+            {{ else }}
+                <i class="ri-checkbox-circle-line color-success"></i>
             {{ end }}
             {{ .System.Name }}
         </td>
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>
+        <td>{{ .Interval }}</td>
         {{if .Operator.Email}}
             <td><i class="ri-menu-search-line"></i> <a href="/machine/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
         {{else}}
@@ -38,9 +40,9 @@
         <td><i class="ri-refresh-line"></i> <a href="/machine/update/list/{{ .Id }}">Update</a></td>
         <td>
             {{ if .Inactive }}
-                inactive
+                <span role="button" class="secondary">inactive</span>
             {{ else }}
-                active
+                <span role="button" class="primary">active</span>
             {{ end }}
         </td>
     </tr>

@@ -21,9 +21,15 @@
                 <label for="eol">EOL</label>
                 <!-- format YY-mm-dd -->
                 <input type="date" name="eol" id="eol" value="{{.System.EOL}}" format="yyyy-mm-dd">
+            </div>
         </div>
     </form>
-    <div>
+    <div class="grid">
+        {{ if .System.CanDelete }}
+            <a href="/system/delete/{{.System.Id}}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </a>
+        {{ end }}
         <button type="submit" form="edit" class="btn btn-green">Save</button>
     </div>
 </div>
