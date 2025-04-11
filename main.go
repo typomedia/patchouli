@@ -3,13 +3,12 @@ package main
 import (
 	"embed"
 	"fmt"
-	"log"
-	"net/http"
-	"time"
-
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/template/html/v2"
+	"github.com/roylee0704/gron"
+	"github.com/roylee0704/gron/xtime"
 	patchouli "github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/handler/api/csv"
 	"github.com/typomedia/patchouli/app/handler/api/htmx"
@@ -22,6 +21,9 @@ import (
 	"github.com/typomedia/patchouli/app/handler/operator"
 	"github.com/typomedia/patchouli/app/handler/system"
 	"github.com/typomedia/patchouli/app/handler/update"
+	"github.com/typomedia/patchouli/app/notifier"
+	"net/http"
+	"time"
 )
 
 //go:embed app/views
@@ -33,9 +35,13 @@ var public embed.FS
 //go:embed public/html/mail/update.html
 var mailTemplate string
 
+//go:embed public/html/mail/notify.html
+var notifyTemplate string
+
 func main() {
 	App := patchouli.GetApp()
 	App.MailTemplate = mailTemplate
+	App.NotifyTemplate = notifyTemplate
 	engine := html.NewFileSystem(http.FS(views), ".html")
 	engine.AddFunc("Name", func() string {
 		return App.Name
@@ -59,6 +65,7 @@ func main() {
 	app.Get("/machine/new", machine.New)
 	app.Get("/machine/edit/:id", machine.Edit)
 	app.Get("/machine/filter/operator/:id", machineFilter.Operator)
+	app.Get("/machine/filter/system/:id", machineFilter.System)
 	app.Post("/machine/save/:id", machine.Save)
 
 	app.Get("/machine/update/list/:id", update.List)
@@ -74,6 +81,9 @@ func main() {
 	app.Get("/operator/new", operator.New)
 	app.Get("/operator/edit/:id", operator.Edit)
 	app.Post("/operator/save/:id", operator.Save)
+
+	app.Get("/operator/deactivate/:id", operator.Deactivate)
+	app.Get("/operator/activate/:id", operator.Activate)
 
 	app.Get("/system", system.List)
 	app.Get("/system/new", system.New)
@@ -94,6 +104,18 @@ func main() {
 		Root:       http.FS(public),
 		PathPrefix: "public",
 	}))
+
+	app.Hooks().OnListen(func(listenData fiber.ListenData) error {
+		if fiber.IsChild() {
+			return nil
+		}
+
+		n := notifier.Notifier{}
+		g := gron.New()
+		g.Add(gron.Every(1*xtime.Week), n)
+		g.Start()
+		return nil
+	})
 
 	log.Fatal(app.Listen(":5000"))
 }

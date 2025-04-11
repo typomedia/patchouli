@@ -30,4 +30,5 @@ type Machine struct {
 	Days     int      `json:"days"`   // remaining days
 	Status   string   `json:"status"` // status color
 	Inactive bool     `json:"inactive"`
+	Interval int      `json:"interval"`
 }

@@ -3,6 +3,7 @@ package machine
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
+	"github.com/typomedia/patchouli/app"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 )
@@ -23,6 +24,10 @@ func Edit(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
+	config := app.GetApp().Config
+	if machine.Interval == 0 {
+		machine.Interval = config.General.Interval
+	}
 	defer db.Close()
 
 	return c.Render("app/views/machine/edit", fiber.Map{

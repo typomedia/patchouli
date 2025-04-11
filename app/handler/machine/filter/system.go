@@ -5,11 +5,11 @@ import (
 	"github.com/typomedia/patchouli/app/store/boltdb"
 )
 
-func Operator(c *fiber.Ctx) error {
-	operatorId := c.Params("id")
+func System(c *fiber.Ctx) error {
+	systemId := c.Params("id")
 	db := boltdb.New()
 
-	machines, err := db.GetAllMachinesByOperatorId(operatorId)
+	Machines, err := db.GetAllMachinesBySystemId(systemId)
 	if err != nil {
 		return err
 	}
@@ -17,6 +17,6 @@ func Operator(c *fiber.Ctx) error {
 	defer db.Close()
 
 	return c.Render("app/views/machine/list", fiber.Map{
-		"Machines": machines,
+		"Machines": Machines,
 	})
 }

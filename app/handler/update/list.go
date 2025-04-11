@@ -22,7 +22,7 @@ func List(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
-	days, _ := db.GetAllByName(id, "history")
+	days, _ := db.GetAllUpdatesByMachineId(id)
 
 	Updates := structs.Updates{}
 

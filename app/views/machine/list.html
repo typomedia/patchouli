@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th><a href="/machine/new"><i class="ri-edit-box-fill"></i> New</a></th>
+        <th>Interval</th>
         <th>System</th>
         <th>Address</th>
         <th>Domain</th>
@@ -16,7 +17,16 @@
     {{range .Machines}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/machine/edit/{{ .Id }}">{{ .Name }}</a></td>
-        <td>{{ .System.Name }}</td>
+        <td>{{ .Interval }}</td>
+        <td>
+            {{ if .System.IsEOL }}
+                <em
+                    data-tooltip="{{ .System.Name}} has reached EOL on {{ .System.EOL }}">
+                    <i class="ri-error-warning-line color-danger"></i>
+                </em>
+            {{ end }}
+            {{ .System.Name }}
+        </td>
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>
         {{if .Operator.Email}}

@@ -72,10 +72,13 @@ a:hover {
   background: #ffcccc;
 }
 .success {
-  background: #ccfecc;
+  background: #f8f9c7;
 }
 .warning {
-  background: #f8f9c7;
+  background: #ccfecc;
+}
+i.ri-error-warning-line {
+  color: #D93526;
 }
 i.mail-success {
   color: #23af23;

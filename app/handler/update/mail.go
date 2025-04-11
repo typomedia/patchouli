@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	patchouli "github.com/typomedia/patchouli/app"
+	"github.com/typomedia/patchouli/app/encryption"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 )
@@ -36,15 +37,19 @@ func Mail(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
-	var config structs.Config
-	err = db.Get("main", &config, "config")
+	config, err := db.GetConfig()
+	if err != nil {
+		log.Error(err)
+	}
+
+	smtpPasswd, err := encryption.DecryptString(config.Smtp.Password)
 	if err != nil {
 		log.Error(err)
 	}
 
 	opts := tinymail.MailerOpts{
 		User:     config.Smtp.Username,
-		Password: config.Smtp.Password,
+		Password: smtpPasswd,
 		Host:     config.Smtp.Host,
 		Port:     config.Smtp.Port,
 	}
