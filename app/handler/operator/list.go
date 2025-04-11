@@ -1,9 +1,11 @@
 package operator
 
 import (
+	"cmp"
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
+	"slices"
 )
 
 func List(c *fiber.Ctx) error {
@@ -23,6 +25,11 @@ func List(c *fiber.Ctx) error {
 		operator.MachineCount = len(machinesOfOperator)
 		Operators = append(Operators, operator)
 	}
+
+	slices.SortFunc(Operators, func(a, b structs.Operator) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+
 	defer db.Close()
 
 	return c.Render("app/views/operator/list", fiber.Map{

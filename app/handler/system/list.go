@@ -18,6 +18,7 @@ func List(c *fiber.Ctx) error {
 	systems, _ := db.GetAll("systems")
 
 	Systems := structs.Systems{}
+	systemsWithoutEOL := structs.Systems{}
 	for _, v := range systems {
 		system := structs.System{}
 		err = json.Unmarshal(v, &system)
@@ -29,9 +30,16 @@ func List(c *fiber.Ctx) error {
 			return err
 		}
 		system.MachineCount = len(machinesOfSystem)
-		Systems = append(Systems, system)
+		if system.EOL == "" {
+			systemsWithoutEOL = append(systemsWithoutEOL, system)
+		} else {
+			Systems = append(Systems, system)
+		}
 	}
+
 	Systems.OrderedBy(Systems.ByName(), Systems.ByEOL()).Sort(Systems)
+	Systems = append(Systems, systemsWithoutEOL...)
+
 	defer db.Close()
 
 	return c.Render("app/views/system/list", fiber.Map{

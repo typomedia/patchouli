@@ -1,9 +1,11 @@
 package machine
 
 import (
+	"cmp"
 	"github.com/gofiber/fiber/v2"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
+	"slices"
 )
 
 func List(c *fiber.Ctx) error {
@@ -21,6 +23,10 @@ func List(c *fiber.Ctx) error {
 
 		}
 	}
+
+	slices.SortFunc(Machines, func(a, b structs.Machine) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
 
 	Machines = append(active, inactive...)
 

@@ -88,6 +88,7 @@ func main() {
 	app.Get("/system/new", system.New)
 	app.Get("/system/edit/:id", system.Edit)
 	app.Post("/system/save/:id", system.Save)
+	app.Get("/system/delete/:id", system.Delete)
 
 	app.Get("/config", config.Edit)
 	app.Post("/config/save", config.Save)

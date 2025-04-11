@@ -50,6 +50,10 @@ type System struct {
 	MachineCount int
 }
 
+func (s System) CanDelete() bool {
+	return s.MachineCount == 0
+}
+
 func (s System) IsEOL() bool {
 	eolTime, err := time.Parse(time.DateOnly, s.EOL)
 	if err != nil {
@@ -68,14 +72,20 @@ func (s Systems) ByName() lessFunc {
 	return func(s1, s2 *System) bool {
 		aSlice := strings.Split(s1.Name, " ")
 		bSlice := strings.Split(s2.Name, " ")
-		return aSlice[0] < bSlice[0]
+		return strings.ToLower(aSlice[0]) < strings.ToLower(bSlice[0])
 	}
 }
 
 func (s Systems) ByEOL() lessFunc {
 	return func(s1, s2 *System) bool {
+		if s1.EOL == "" {
+			return false
+		}
+		if s2.EOL == "" {
+			return true
+		}
 		time1, _ := time.Parse(time.DateOnly, s1.EOL)
 		time2, _ := time.Parse(time.DateOnly, s2.EOL)
-		return time1.UTC().After(time2.UTC())
+		return time1.UTC().Before(time2.UTC())
 	}
 }

@@ -122,9 +122,9 @@ func (bolt *Bolt) Set(key string, value interface{}, bucket string) error {
 	return err
 }
 
-func (bolt *Bolt) Delete(key string) error {
+func (bolt *Bolt) Delete(key string, bucket string) error {
 	err := bolt.db.Update(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte("machine"))
+		bucket := tx.Bucket([]byte(bucket))
 		err := bucket.Delete([]byte(key))
 		return err
 	})
