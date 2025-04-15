@@ -2,10 +2,9 @@
 <div class="container">
     <form action="/machine/update/save/{{ .Update.Id }}" method="post" id="edit">
         <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="machine" id="machine" value="{{ .Update.Machine }}">
+        <input type="hidden" name="machine" id="mail" value="{{ .Update.Mail }}">
         <div>
-            <div>
-                <input type="hidden" name="machine" id="machine" value="{{ .Update.Machine }}">
-            </div>
             <div>
                 <label for="operator">Operator</label>
                 <select name="operator" id="operator" hx-get="/api/htmx/operators?selected={{.Update.Operator.Id}}"

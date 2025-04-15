@@ -14,9 +14,10 @@ func Save(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	sendMail := false
+	newEntry := false
 	if id == "new" {
 		id = helper.GenerateId()
-		sendMail = true
+		newEntry = true
 	}
 
 	db := boltdb.New()
@@ -46,6 +47,7 @@ func Save(c *fiber.Ctx) error {
 	if update.Id == "" {
 		update.Id = helper.GenerateId()
 	}
+	sendMail = newEntry || !update.Mail
 
 	err = db.Set(update.Id, update, "history")
 	if err != nil {
@@ -54,5 +56,6 @@ func Save(c *fiber.Ctx) error {
 	if sendMail {
 		return c.Redirect("/machine/update/mail/send/" + update.Id)
 	}
+
 	return c.Redirect("/machine/update/list/" + machine.Id)
 }
