@@ -87,5 +87,5 @@ func Mail(c *fiber.Ctx) error {
 	if err != nil {
 		log.Error(err)
 	}
-	return c.Redirect("/machine/update/list/" + machine.Id)
+	return c.Redirect("/machine/update/list/" + update.Machine)
 }

@@ -409,12 +409,14 @@
                         <p>Der Server {{ .Machine.Fqdn }} wurde von <a href="mailto:{{ .Operator.Email }}">{{ .Operator.Name }}</a> aktualisiert.</p>
                       </td>
                     </tr>
+                    {{ if .Update.Description }}
                     <tr>
                       <td>
                         <p>Beschreibung:</p>
                         <code>{{ .Update.Description }}</code>
                       </td>
                     </tr>
+                    {{ end }}
                   </table>
                 </td>
               </tr>
