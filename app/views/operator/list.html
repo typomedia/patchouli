@@ -16,7 +16,7 @@
         <td>{{.Department}}</td>
         <td><i class="ri-mail-line"></i> <a href="mailto:{{ .Email }}">{{ .Email }}</a></td>
         <td>
-            <a href="/machines/filter/operator/{{ .Id }}">
+            <a href="/machine/filter/operator/{{ .Id }}">
                 {{ if eq .MachineCount 0 }}
                     <span role="button" class="secondary">
                         {{ .MachineCount }}
