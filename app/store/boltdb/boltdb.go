@@ -263,21 +263,20 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 			interval = config.General.Interval
 		}
 
-		Machines[i].Days = int(currentDate.Sub(date).Hours() / 24)
-		if Machines[i].Days > interval {
-			Machines[i].Status = "danger"
-		} else if Machines[i].Days > interval/3 {
-			Machines[i].Status = "warning"
-		} else {
-			Machines[i].Status = "success"
-		}
 		Machines[i].Days = interval - int(currentDate.Sub(date).Hours()/24)
 
+		if Machines[i].Days <= interval/3 && Machines[i].Days > 0 {
+			Machines[i].Status = "warning"
+		} else if Machines[i].Days <= interval && Machines[i].Days > 0 {
+			Machines[i].Status = "success"
+		} else {
+			Machines[i].Status = "danger"
+		}
 	}
 
 	// sort machines by oldest update first
 	sort.Slice(Machines, func(i, j int) bool {
-		return Machines[i].Update.Date < Machines[j].Update.Date
+		return Machines[i].Days < Machines[j].Days
 	})
 
 	return Machines, nil

@@ -28,6 +28,9 @@ body main {
 body main > .container {
   margin-top: 2em;
 }
+body main table#sort thead th {
+  cursor: pointer;
+}
 body main table#sort thead th:after {
   content: "\f15f";
   font-family: 'Remixicon';
@@ -72,10 +75,10 @@ a:hover {
   background: #ffcccc;
 }
 .success {
-  background: #f8f9c7;
+  background: #ccfecc;
 }
 .warning {
-  background: #ccfecc;
+  background: #f8f9c7;
 }
 i.ri-error-warning-line {
   color: #D93526;
