@@ -29,7 +29,7 @@
             {{ .System.Name }}
         </td>
         <td>{{ .Ip }}</td>
-        <td>{{ .Fqdn }}</td>
+        <td><i class="ri-global-line"></i>  {{ .Fqdn }}</td>
         <td>{{ .Interval }}</td>
         {{if .Operator.Email}}
             <td><i class="ri-menu-search-line"></i> <a href="/machine/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
