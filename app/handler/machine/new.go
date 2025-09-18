@@ -9,7 +9,13 @@ func New(c *fiber.Ctx) error {
 	db := boltdb.New()
 	db.SetBucket("machine")
 
+	config, err := db.GetConfig()
+	if err != nil {
+		return err
+	}
 	defer db.Close()
 
-	return c.Render("app/views/machine/new", fiber.Map{})
+	return c.Render("app/views/machine/new", fiber.Map{
+		"Config": config,
+	})
 }
