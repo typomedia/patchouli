@@ -3,16 +3,15 @@
     <thead>
     <tr>
         <th><a href="/system/new"><i class="ri-edit-box-fill"></i> New</a></th>
-        <th>Machines</th>
         <th>LTS</th>
         <th>EOL</th>
+        <th>Machines</th>
     </tr>
     </thead>
     <tbody>
     {{range .Systems}}
     <tr>
         <td><i class="ri-edit-line"></i> <a href="/system/edit/{{.Id}}">{{.Name}}</a></td>
-        <td><a href="/machine/filter/system/{{.Id}}"><i class="ri-menu-search-line"></i>{{ .MachineCount }}</a></td>
         <td>
             {{ if .LTS }}
             <span role="button" class="primary">True</span>
@@ -21,6 +20,19 @@
             {{ end }}
         </td>
         <td>{{ .EOL }}</td>
+        <td>
+            <a href="/machine/filter/system/{{ .Id }}">
+                {{ if eq .MachineCount 0 }}
+                <span role="button" class="secondary">
+                            {{ .MachineCount }}
+                        </span>
+                {{ else }}
+                <span role="button" class="primary">
+                            {{ .MachineCount }}
+                        </span>
+                {{ end }}
+            </a>
+        </td>
     </tr>
     {{end}}
     </tbody>

@@ -28,6 +28,9 @@ body main {
 body main > .container {
   margin-top: 2em;
 }
+body main table#sort thead th {
+  cursor: pointer;
+}
 body main table#sort thead th:after {
   content: "\f15f";
   font-family: 'Remixicon';
@@ -72,13 +75,16 @@ a:hover {
   background: #ffcccc;
 }
 .success {
-  background: #f8f9c7;
+  background: #ccfecc;
 }
 .warning {
-  background: #ccfecc;
+  background: #f8f9c7;
 }
 i.ri-error-warning-line {
   color: #D93526;
+}
+i.ri-checkbox-circle-line {
+  color: #398712;
 }
 i.mail-success {
   color: #23af23;
@@ -93,6 +99,9 @@ i.mail-fail {
 }
 .btn-success {
   background: #398712;
+}
+[role="button"] {
+  font-size: 0.875rem;
 }
 [data-tooltip]:not(a, button, input) {
   border-bottom: var(--border-width) solid var(--table-border-color);

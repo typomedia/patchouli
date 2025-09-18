@@ -22,6 +22,12 @@ func Edit(c *fiber.Ctx) error {
 		log.Error(err)
 	}
 
+	machinesOfSystem, err := db.GetMachinesBySystem(system.Id)
+	if err != nil {
+		log.Error(err)
+	}
+	system.MachineCount = len(machinesOfSystem)
+
 	defer db.Close()
 
 	return c.Render("app/views/system/edit", fiber.Map{

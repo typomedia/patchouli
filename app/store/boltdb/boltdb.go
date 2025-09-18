@@ -122,9 +122,9 @@ func (bolt *Bolt) Set(key string, value interface{}, bucket string) error {
 	return err
 }
 
-func (bolt *Bolt) Delete(key string) error {
+func (bolt *Bolt) Delete(key string, bucket string) error {
 	err := bolt.db.Update(func(tx *bbolt.Tx) error {
-		bucket := tx.Bucket([]byte("machine"))
+		bucket := tx.Bucket([]byte(bucket))
 		err := bucket.Delete([]byte(key))
 		return err
 	})
@@ -263,21 +263,20 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 			interval = config.General.Interval
 		}
 
-		Machines[i].Days = int(currentDate.Sub(date).Hours() / 24)
-		if Machines[i].Days > interval {
-			Machines[i].Status = "danger"
-		} else if Machines[i].Days > interval/3 {
-			Machines[i].Status = "warning"
-		} else {
-			Machines[i].Status = "success"
-		}
 		Machines[i].Days = interval - int(currentDate.Sub(date).Hours()/24)
 
+		if Machines[i].Days <= interval/3 && Machines[i].Days > 0 {
+			Machines[i].Status = "warning"
+		} else if Machines[i].Days <= interval && Machines[i].Days > 0 {
+			Machines[i].Status = "success"
+		} else {
+			Machines[i].Status = "danger"
+		}
 	}
 
 	// sort machines by oldest update first
 	sort.Slice(Machines, func(i, j int) bool {
-		return Machines[i].Update.Date < Machines[j].Update.Date
+		return Machines[i].Days < Machines[j].Days
 	})
 
 	return Machines, nil
@@ -331,6 +330,26 @@ func (bolt *Bolt) GetMachinesBySystem(systemId string) (structs.Machines, error)
 	}
 
 	return machinesOfSystem, nil
+}
+
+func (bolt *Bolt) GetMachinesByOperator(operatorId string) (structs.Machines, error) {
+	machines, err := bolt.GetAll("machine")
+	if err != nil {
+		return nil, err
+	}
+	machinesOfOperator := structs.Machines{}
+	for _, v := range machines {
+		machine := structs.Machine{}
+		err := json.Unmarshal(v, &machine)
+		if err != nil {
+			return nil, err
+		}
+		if machine.Operator.Id == operatorId {
+			machinesOfOperator = append(machinesOfOperator, machine)
+		}
+	}
+
+	return machinesOfOperator, nil
 }
 
 func (bolt *Bolt) Close() error {

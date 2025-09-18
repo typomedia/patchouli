@@ -23,7 +23,17 @@
         {{ end }}
         <td>{{ .Update.Date }}</td>
         <td>{{ .Name }}</td>
-        <td>{{ .System.Name }}</td>
+        <td>
+            {{ if .System.IsEOL }}
+            <em
+                    data-tooltip="{{ .System.Name}} has reached EOL on {{ .System.EOL }}">
+                <i class="ri-error-warning-line color-danger"></i>
+            </em>
+            {{ else }}
+            <i class="ri-checkbox-circle-line color-success"></i>
+            {{ end }}
+            {{ .System.Name }}
+        </td>
         <td>{{ .Ip }}</td>
         <td>{{ .Fqdn }}</td>
         {{ if .Operator.Email }}

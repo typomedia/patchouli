@@ -20,7 +20,7 @@ type Application struct {
 func new() *Application {
 	app = &Application{}
 	app.Name = "Patchouli"
-	app.Version = "0.2.1"
+	app.Version = "0.3.0"
 	app.Author = "Philipp Speck <philipp@typo.media>"
 	app.Description = "Patch Management Planner"
 	err := app.LoadConfig()

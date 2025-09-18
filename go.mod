@@ -9,7 +9,7 @@ require (
 	github.com/gofiber/template/html/v2 v2.1.3
 	github.com/gorilla/schema v1.4.1
 	github.com/oklog/ulid/v2 v2.1.0
-	github.com/roylee0704/gron v0.0.0-20160621042432-e78485adab46
+	github.com/robfig/cron/v3 v3.0.1
 	go.etcd.io/bbolt v1.4.0
 )
 

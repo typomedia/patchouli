@@ -23,7 +23,7 @@ All data will be stored in a single `patchouli.boltdb` file in the current worki
 
 ## Cross compile
 
-    make compile
+    make cross
 
 ## Technology
 
@@ -35,14 +35,9 @@ All data will be stored in a single `patchouli.boltdb` file in the current worki
 
 ## Todo
 
-- [ ] add delete functionality
 - [ ] add a login page
-- [ ] add a `toml` config file
-- [ ] email notifications
+- [ ] add a global search
 - [ ] protect api used by the frontend
-- [ ] optimize json/csv export
-- [ ] add json/csv import api
-- [ ] refactor some quirky code
 - [ ] write some tests...
 
 ## Systemd
@@ -61,4 +56,4 @@ If not running in a container, change the `User` and `Group` for security reason
 Patchouli is licensed under the [GNU General Public License v3.0](LICENSE).
 
 ---
-Copyright © 2024 Typomedia Foundation. All rights reserved.
+Copyright © 2025 Typomedia Foundation. All rights reserved.

@@ -71,7 +71,12 @@ func (n Notifier) Run() {
 		}
 
 		msg.SetFrom(config.Smtp.Sender)
-		msg.SetTo(config.General.Email)
+		if operator.Email == "" {
+			msg.SetTo(config.General.Email)
+		} else {
+			msg.SetTo(operator.Email)
+		}
+
 		msg.SetSubject("Patchmgmt: Maschinen benötigen Updates!")
 
 		mailer.SetMessage(msg)

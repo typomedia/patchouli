@@ -24,7 +24,7 @@
             <input type="hidden" name="_method" value="PATCH">
         </form>
         <button type="submit" form="activate" class="btn-success">Activate</button>
-        {{ else }}
+        {{ else if .Operator.CanDeactivate }}
         <form style="display:none;" action="/operator/deactivate/{{.Operator.Id}}" method="get" id="deactivate">
             <input type="hidden" name="_method" value="PATCH">
         </form>
