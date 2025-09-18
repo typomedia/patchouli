@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"github.com/gofiber/fiber/v2"
 	"net/url"
 	"strconv"
 	"time"
@@ -41,4 +42,13 @@ func UnixToDateString(timestamp string) string {
 func UnixToDate(timestamp string) time.Time {
 	i, _ := strconv.ParseInt(timestamp, 10, 64)
 	return time.Unix(i, 0)
+}
+
+func Referer(c *fiber.Ctx) string {
+	referer := c.GetReqHeaders()["Referer"][0]
+	refUrl, err := url.Parse(referer)
+	if err != nil {
+		return ""
+	}
+	return refUrl.Path
 }

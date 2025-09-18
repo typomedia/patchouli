@@ -60,5 +60,5 @@ func Save(c *fiber.Ctx) error {
 
 	defer db.Close()
 
-	return c.Redirect("/machine")
+	return c.Redirect(values.Get("_referer"))
 }

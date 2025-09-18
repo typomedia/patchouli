@@ -2,6 +2,7 @@
 <div class="container">
     <form action="/machine/save/{{.Machine.Id}}" method="post" id="edit">
         <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="_referer" value="{{.Referer}}">
         <input type="hidden" name="inactive" value="{{.Machine.Inactive}}">
         <div>
             <div>
