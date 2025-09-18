@@ -35,7 +35,19 @@
             {{ .System.Name }}
         </td>
         <td>{{ .Ip }}</td>
-        <td>{{ .Fqdn }}</td>
+        <td>
+            {{ if .InternetAccess }}
+            <em
+                    data-tooltip="{{ .Name }} is accessible from the web">
+                <i class="ri-global-line has-access"></i>
+            </em>
+
+            {{ else }}
+            <i class="ri-global-line"></i>
+            {{ end }}
+
+            {{ .Fqdn }}
+        </td>
         {{ if .Operator.Email }}
             <td><i class="ri-menu-search-line"></i> <a href="/filter/operator/{{ .Operator.Id}}">{{ .Operator.Name }}</a></td>
         {{ else }}

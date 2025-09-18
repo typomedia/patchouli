@@ -8,8 +8,14 @@
                 <input type="text" name="name" id="name" value="{{.Machine.Name}}" required>
             </div>
             <div>
+                <label for="internet_access">
+                    <input type="checkbox" id="internet_access" name="internet_access" role="switch">
+                    accessible from web
+                </label>
+            </div>
+            <div>
                 <label for="interval">Interval</label>
-                <input type="text" name="interval" id="interval" value="{{.Machine.Interval}}">
+                <input type="text" name="interval" id="interval" value="{{.Config.General.Interval}}">
             </div>
             <div>
                 <label for="system">System</label>
@@ -25,7 +31,7 @@
             </div>
             <div>
                 <label for="ip">IP</label>
-                <input type="text" name="ip" id="ip" value="{{.Machine.Ip}}">
+                <input type="text" name="ip" id="ip" value="{{.Machine.Ip}}" required>
             </div>
             <div>
                 <label for="fqdn">FQDN</label>

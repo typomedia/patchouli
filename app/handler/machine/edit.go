@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/typomedia/patchouli/app"
+	"github.com/typomedia/patchouli/app/helper"
 	"github.com/typomedia/patchouli/app/store/boltdb"
 	"github.com/typomedia/patchouli/app/structs"
 )
@@ -32,5 +33,6 @@ func Edit(c *fiber.Ctx) error {
 
 	return c.Render("app/views/machine/edit", fiber.Map{
 		"Machine": machine,
+		"Referer": helper.Referer(c),
 	})
 }

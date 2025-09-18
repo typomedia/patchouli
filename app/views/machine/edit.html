@@ -2,11 +2,22 @@
 <div class="container">
     <form action="/machine/save/{{.Machine.Id}}" method="post" id="edit">
         <input type="hidden" name="_method" value="PATCH">
+        <input type="hidden" name="_referer" value="{{.Referer}}">
         <input type="hidden" name="inactive" value="{{.Machine.Inactive}}">
         <div>
             <div>
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" value="{{.Machine.Name}}" required>
+            </div>
+            <div>
+                <label for="internet_access">
+                    {{ if .Machine.InternetAccess }}
+                    <input type="checkbox" id="internet_access" name="internet_access" role="switch" checked="checked">
+                    {{ else }}
+                    <input type="checkbox" id="internet_access" name="internet_access" role="switch">
+                    {{ end }}
+                    accessible from web
+                </label>
             </div>
             <div>
                 <label for="interval">Interval</label>

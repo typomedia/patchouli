@@ -10,6 +10,8 @@ import (
 	"go.etcd.io/bbolt"
 )
 
+const INTERVAL_WARNING_DIVISOR = 30
+
 var Config = bbolt.Options{
 	Timeout: 1 * time.Second,
 }
@@ -265,7 +267,7 @@ func (bolt *Bolt) GetActiveMachines() (structs.Machines, error) {
 
 		Machines[i].Days = interval - int(currentDate.Sub(date).Hours()/24)
 
-		if Machines[i].Days <= interval/3 && Machines[i].Days > 0 {
+		if Machines[i].Days <= interval/INTERVAL_WARNING_DIVISOR && Machines[i].Days > 0 {
 			Machines[i].Status = "warning"
 		} else if Machines[i].Days <= interval && Machines[i].Days > 0 {
 			Machines[i].Status = "success"
