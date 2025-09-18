@@ -94,6 +94,9 @@ i.mail-fail {
   color: #d51616;
   font-size: 20pt;
 }
+i.ri-global-line.has-access {
+  color: #1095c1;
+}
 .btn-danger {
   background: #D93526;
 }

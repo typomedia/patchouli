@@ -16,19 +16,20 @@ func (a ByDate) Less(i, j int) bool {
 }
 
 type Machine struct {
-	Id       string   `json:"id"`
-	Name     string   `json:"name"`
-	System   System   `json:"system"`
-	Location string   `json:"location"`
-	Ip       string   `json:"ip"`
-	Fqdn     string   `json:"fqdn"`
-	Service  string   `json:"service"`
-	Comment  string   `json:"comment"`
-	Backup   string   `json:"backup"`
-	Operator Operator `json:"operator"`
-	Update   Update   `json:"update"` // last update
-	Days     int      `json:"days"`   // remaining days
-	Status   string   `json:"status"` // status color
-	Inactive bool     `json:"inactive"`
-	Interval int      `json:"interval"`
+	Id             string   `json:"id"`
+	Name           string   `json:"name"`
+	System         System   `json:"system"`
+	Location       string   `json:"location"`
+	Ip             string   `json:"ip"`
+	Fqdn           string   `json:"fqdn"`
+	Service        string   `json:"service"`
+	Comment        string   `json:"comment"`
+	Backup         string   `json:"backup"`
+	Operator       Operator `json:"operator"`
+	Update         Update   `json:"update"` // last update
+	Days           int      `json:"days"`   // remaining days
+	Status         string   `json:"status"` // status color
+	Inactive       bool     `json:"inactive"`
+	Interval       int      `json:"interval"`
+	InternetAccess bool     `json:"internet_access"`
 }
