@@ -52,6 +52,7 @@ func Mail(c *fiber.Ctx) error {
 		Password: smtpPasswd,
 		Host:     config.Smtp.Host,
 		Port:     config.Smtp.Port,
+		TLS:      true,
 	}
 
 	mailer, err := tinymail.New(opts)
